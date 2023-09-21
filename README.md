@@ -1,2 +1,2 @@
-# gsap
-GSAP tutorials.
+# GSAP Js Tutorials
+GSAP javascript tutorials.
