@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Swip image on scroll</title>
+		<title>Pin on scroll</title>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -138,6 +138,41 @@
 				outline: 0px solid transparent !important;
 				/* color: #1e90ff; */
 			}
+
+			@media all and (max-width: 640px) {
+				.gallery {
+					position: relative;
+				}
+
+				.left {
+					width: 100%;
+				}
+
+				.right {
+					width: 100%;
+					position: absolute;
+				}
+
+				.photos {
+					position: absolute;
+					width: 100%;
+					height: 50vh;
+					bottom: 0px;
+				}
+
+				.photos-box {
+					width: 90%;
+					height: 90%;
+					top: 0%;
+					left: 5%;
+					bottom: 5%;
+				}
+
+				.details {
+					justify-content: start;
+					margin-top: 90px;
+				}
+			}
 		</style>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -153,7 +188,7 @@
 				<div class="detailsWrapper">
 					<div class="details d1">
 						<div class="headline red">
-							<span>Beauty brand, e-commerce</span>
+							<span>Website title</span>
 						</div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -163,7 +198,7 @@
 
 					<div class="details d2">
 						<div class="headline green">
-							<span>Beauty brand, e-commerce</span>
+							<span>Website title</span>
 						</div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -173,7 +208,7 @@
 
 					<div class="details d3">
 						<div class="headline blue">
-							<span>Beauty brand, e-commerce</span>
+							<span>Website title</span>
 						</div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -183,7 +218,7 @@
 
 					<div class="details d4">
 						<div class="headline orange">
-							<span>Beauty brand, e-commerce</span>
+							<span>Website title</span>
 						</div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -220,6 +255,8 @@
 		<script>
 			window.onload = () => {
 				console.log('Gsap works')
+
+				gsap.registerPlugin(ScrollTrigger)
 
 				gsap.set('.photo:not(:first-child)', { opacity: 1, scale: 1, y: '100%' })
 
