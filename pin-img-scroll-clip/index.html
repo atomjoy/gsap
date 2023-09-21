@@ -15,8 +15,8 @@
 			}
 
 			body {
-				background: #fff;
 				margin: 0;
+				background: #fff;
 				font-family: 'Poppins', sans-serif;
 			}
 
@@ -135,6 +135,41 @@
 				outline: 0px solid transparent !important;
 				/* color: #1e90ff; */
 			}
+
+			@media all and (max-width: 640px) {
+				.gallery {
+					position: relative;
+				}
+
+				.left {
+					width: 100%;
+				}
+
+				.right {
+					width: 100%;
+					position: absolute;
+				}
+
+				.photos {
+					position: absolute;
+					width: 100%;
+					height: 50vh;
+					bottom: 0px;
+				}
+
+				.photos-box {
+					width: 90%;
+					height: 90%;
+					top: 0%;
+					left: 5%;
+					bottom: 5%;
+				}
+
+				.details {
+					justify-content: start;
+					margin-top: 90px;
+				}
+			}
 		</style>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -210,6 +245,11 @@
 			window.onload = () => {
 				console.log('Gsap works')
 
+				let details = gsap.utils.toArray('.details')
+				let props = gsap.getProperty('#id', 'backgroundColor')
+
+				gsap.registerPlugin(ScrollTrigger)
+
 				gsap.set('.photo:not(:first-child)', {
 					opacity: 1,
 					scale: 1,
@@ -225,11 +265,12 @@
 				const animation = gsap.to('.photo:not(:first-child)', {
 					opacity: 1,
 					scale: 1,
-					duration: 0.5,
+					duration: 1,
 					stagger: 1,
 					// y: '0%',
 					clipPath: 'inset(0% 0% 0%)',
 					scale: 1,
+					snap: true,
 				})
 
 				gsap.to('.photo img', {
