@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<style>
+			body {
+				margin: 0px;
+				padding: 0px;
+				overflow-x: hidden;
+			}
+
+			.div1,
+			.div2,
+			.div3,
+			.div4,
+			.horizontal,
+			.section {
+				height: 100vh;
+				width: 100vw;
+			}
+
+			.div1 {
+				background-color: #f60;
+			}
+
+			.div2 {
+				background-color: #5c5;
+			}
+
+			.div3 {
+				background-color: #f90;
+				max-width: 100%;
+			}
+
+			.div4 {
+				background-color: #a80ad8;
+			}
+
+			.box {
+				width: 150px;
+				height: 20vh;
+				background-color: #09f;
+			}
+
+			.box1 {
+				width: 150px;
+				height: 20vh;
+				background-color: #ff2233;
+			}
+
+			.boom {
+				background-color: #ffd900;
+			}
+
+			.nav {
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				left: 0px;
+				width: 100%;
+				padding: 20px;
+				background-color: transparent;
+			}
+
+			.nav-active {
+				background-color: #fff !important;
+			}
+
+			.container {
+				width: 500%;
+				height: 100%;
+				display: flex;
+				flex-wrap: nowrap;
+			}
+
+			.c1 {
+				background-color: #09f;
+			}
+			.c2 {
+				background-color: #f23;
+			}
+			.c3 {
+				background-color: #f90;
+			}
+			.c4 {
+				background-color: #5c5;
+			}
+
+			.item-1,
+			.item-2 {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 100px;
+				height: 80px;
+				text-align: center;
+				line-height: 80px;
+				background-color: white;
+				border-radius: 8px;
+				color: #222;
+				font-weight: 700;
+				margin-left: 20px;
+				will-change: transform;
+			}
+
+			.loading {
+				height: 100%;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.circle {
+				transform: translateY(-30px);
+			}
+		</style>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+	</head>
+	<body>
+		<div class="nav">
+			<a href="#">link</a>
+			<a href="#">link</a>
+			<a href="#">link</a>
+			<a href="#">link</a>
+		</div>
+
+		<div class="div1">
+			<div>Hello</div>
+
+			<video autoplay="" loop="" muted="" playsinline="" style="width: 80vw; height: auto; position: absolute; bottom: 0; right: 0; left: auto; top: auto; z-index: 100">
+				<source src="https://rotato.netlify.app/alpha-demo-site/movie-hevc.mov" type='video/mp4; codecs="hvc1"' />
+				<source src="https://rotato.netlify.app/alpha-demo-site/movie-webm.webm" type="video/webm" />
+			</video>
+		</div>
+
+		<div class="div2">
+			<div class="box"></div>
+			<div class="box1"></div>
+
+			<video width="auto" height="100%" autoplay loop muted playsinline>
+				<source src="https://rotato.netlify.app/alpha-demo/movie-hevc.mov" type='video/mp4; codecs="hvc1"' />
+				<source src="https://rotato.netlify.app/alpha-demo/movie-webm.webm" type="video/webm" />
+			</video>
+		</div>
+
+		<div class="container">
+			<section class="section c1">
+				<h2>section 1</h2>
+				<div class="item-1 item">item-1</div>
+			</section>
+			<section class="section c2">
+				<h2>section 2</h2>
+				<div class="item-2 item">item-2</div>
+			</section>
+			<section class="section c3"><h2>section 3</h2></section>
+			<section class="section c4">
+				<h2>section 4</h2>
+
+				<div class="loading">
+					<svg width="120" height="100">
+						<circle class="circle" cx="20" cy="70" r="8"></circle>
+						<circle class="circle" cx="60" cy="70" r="8"></circle>
+						<circle class="circle" cx="100" cy="70" r="8"></circle>
+					</svg>
+					<p>Loading</p>
+				</div>
+
+				<svg id="infinity" viewBox="0 0 1697 774" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						id="path"
+						d="M1004.59 207.25C1101.81 110.14 1182.89 57.69 1310.55 57.69C1492.58 57.69 1640.14 205.25 1640.14 387.28C1640.14 569.31 1492.58 716.87 1310.55 716.87C1128.52 716.87 1024.36 570.77 851.9 387.28C689.74 214.74 568.3 57.68 386.28 57.68C204.25 57.68 56.69 205.24 56.69 387.27C56.69 569.3 204.25 716.86 386.28 716.86C518.41 716.86 591.87 660.01 692.04 554.25"
+						stroke="orange"
+						stroke-width="113.37"
+						stroke-miterlimit="10"
+						stroke-linecap="round" />
+				</svg>
+
+				<!-- <svg viewBox="0 0 1439.52 48.63" class="common-footer--paper" xmlns="http://www.w3.org/2000/svg">
+					<path
+						fill-rule="evenodd"
+						clip-rule="evenodd"
+						d="M269.68 48.5703L0.329956 48.9999L0.281902 0.366211H1439.8V46.6333L686.63 47.9317C683.57 46.2539 680.08 45.7844 676.17 46.6132C670.908 47.7161 666.432 45.4577 661.965 43.2031C660.243 42.3343 658.523 41.4664 656.76 40.7916C656.349 40.6287 656.079 40.1002 655.814 39.5824L655.811 39.5762C655.703 39.3652 655.596 39.1559 655.48 38.9744C652.4 34.2112 650.28 33.8417 645.41 37.4366C642.14 36.0387 638.78 35.26 635.09 36.8973C634.714 37.0631 634.338 37.2303 633.962 37.3976C629.034 39.5897 624.053 41.8052 618.33 41.0812C617.688 40.993 617.019 41.1127 616.34 41.234L616.338 41.2343C615.865 41.3191 615.386 41.4045 614.91 41.421C614.059 41.4586 613.207 41.5073 612.356 41.5561L612.354 41.5562C609.807 41.7019 607.261 41.8476 604.72 41.6907C601.85 41.5239 598.988 41.2294 596.126 40.9344C593.503 40.6643 590.88 40.3942 588.25 40.2226C587.234 40.1533 586.202 40.2255 585.171 40.2977L585.171 40.2977C582.638 40.4742 580.108 40.6505 577.82 38.735C577.3 38.3152 575.97 38.635 575.1 38.8944C573.874 39.2625 572.659 39.6726 571.446 40.089C571.249 40.1563 571.053 40.2238 570.856 40.2912C569.564 40.7352 568.27 41.1797 566.96 41.5805C563.57 42.599 560.2 42.679 556.94 41.1212C554.948 40.1796 553.142 38.8975 551.334 37.6147L551.332 37.6131C548.196 35.3873 545.057 33.1595 540.94 32.7036C540.628 32.6598 540.355 32.4099 540.075 32.1533L540.073 32.1522C539.905 31.9976 539.734 31.8411 539.55 31.7251C534.78 28.7192 531.7 29.1287 528.64 33.6222C527.13 35.849 525.65 35.949 523.37 35.2C521.04 34.4311 518.53 33.6222 516.12 33.6822C510.51 33.8217 505.76 32.3438 501.31 28.8289C497.46 25.7932 492.94 26.6221 489.89 30.6363C487.99 33.123 485.17 34.0216 482.85 33.7319C476.691 32.9972 471.432 35.4433 466.367 37.7993C465.856 38.0368 465.347 38.2732 464.84 38.5053C459.95 40.7218 456.4 40.9018 452.36 37.5165C450.54 35.9787 448.55 35.6193 446.29 37.7759C444.29 39.6833 441.27 39.9632 438.78 38.3854C435.753 36.4665 433.137 37.5337 430.455 38.6277L430.454 38.6282C430.177 38.7413 429.899 38.8544 429.62 38.9646C429.298 39.0909 428.956 39.281 428.616 39.4707L428.614 39.4716C427.932 39.8516 427.253 40.2293 426.74 40.0826C423.497 39.085 420.445 39.8057 417.397 40.5253C415.868 40.8866 414.34 41.2474 412.79 41.3908C409.42 41.6906 407.54 43.1085 407.11 45.6746C405.987 45.9862 404.899 46.2329 403.853 46.4699C401.647 46.9692 399.63 47.426 397.88 48.3607C397.87 48.3709 397.84 48.3807 397.84 48.3807L321.64 48.5006C321.201 48.2495 320.761 47.9955 320.338 47.7264C319.903 47.4499 319.485 47.1569 319.1 46.8331C316.29 44.4367 313.64 43.6775 310.26 45.6746C309.475 46.1294 308.499 46.2404 307.518 46.3519L307.514 46.3524C306.945 46.4167 306.375 46.4816 305.84 46.6132C303.999 47.0555 302.083 47.1231 300.164 47.1908L300.159 47.191C297.442 47.2866 294.716 47.3826 292.18 48.5406L278.94 48.5606C278.867 48.5448 278.791 48.5346 278.714 48.5243C278.643 48.5148 278.572 48.5051 278.5 48.4909C276.718 48.1109 274.976 47.5624 273.165 46.9924L273.161 46.9911L273.15 46.9878C272.395 46.7499 271.627 46.5083 270.84 46.2739C270.43 47.0925 270.05 47.8414 269.68 48.5703Z"
+						fill="currentColor"></path>
+				</svg> -->
+			</section>
+		</div>
+
+		<div class="div4">
+			<h1>Bye bye</h1>
+		</div>
+
+		<script>
+			window.onload = () => {
+				console.log('Gsap works')
+
+				// Loop
+				// gsap.fromTo('circle', 1.5, { y: -30 }, { y: 0, yoyo: true, repeat: -1, stagger: 0.3 })
+
+				// Loop
+				// var dots = gsap.timeline({ repeat: -1 })
+				// dots.to('circle', { duration: 0.6, y: 0, stagger: 0.3 }).to('circle', { duration: 0.6, y: -30, stagger: 0.3 })
+
+				// Loop
+				gsap.to('circle', {
+					y: 0,
+					stagger: { each: 0.15, yoyo: true, repeat: -1 },
+					ease: 'sine.inOut',
+				})
+
+				// Up down loop
+				// gsap.to('#mobilephone', { duration: 1.5, y: -20, repeat: -1, yoyo: true })
+
+				// Scroll
+				gsap.registerPlugin(ScrollTrigger)
+
+				gsap.to('.box', {
+					// animate
+					x: 500,
+					duration: 15,
+					rotation: 360,
+					// scroll trigger
+					scrollTrigger: {
+						markers: true,
+						trigger: '.box1',
+						start: 'top 80%',
+						end: 'top 30%',
+						scrub: 1,
+						toggleClass: 'boom',
+						// onEnter, onLeave, OnEnterBack, onLeaveBack
+						// none, play, restart, reverse, pause, resume, reset, complete
+						toggleActions: 'restart none none none',
+						// Pin div
+						pin: '.box',
+						pinSpacing: false,
+						// horizontal: true,
+						// trigger: '.trigger',
+						// start: 'top 30%',
+						// start: 100, // 100 px below trigger
+						// end: () => `+=${document.querySelector('.box').offsetHeight}`,
+					},
+				})
+
+				// toggle menu class
+				ScrollTrigger.create({
+					markers: true,
+					trigger: '.div1',
+					start: '90px 10%',
+					toggleClass: { targets: '.nav', className: 'nav-active' },
+					scrub: 1,
+					onEnter: () => {
+						console.log('Start')
+					},
+					onUpdate: (o) => {
+						console.log(o)
+					},
+					onToggle: (o) => {
+						console.log(o)
+					},
+				})
+
+				// horizontal scroll
+				let sections = gsap.utils.toArray('.section')
+				let container = document.querySelector('.container')
+
+				let scrollTween = gsap.to(sections, {
+					ease: 'none', // <-- IMPORTANT!
+					xPercent: -100 * (sections.length - 1),
+					scrollTrigger: {
+						trigger: '.container',
+						pin: true,
+						scrub: true,
+						ease: 'none',
+						end: `+=${container.offsetWidth}`,
+						// end: '+=3000',
+						// snap: directionalSnap(1 / (sections.length - 1)),
+					},
+				})
+
+				// gsap.set('.item-1, .item-2', { y: 100 })
+				ScrollTrigger.defaults({ markers: { startColor: 'white', endColor: 'white' } })
+
+				gsap.to('.item-1', {
+					y: -200,
+					duration: 1,
+					rotation: 360,
+					// ease: 'elastic',
+					scrollTrigger: {
+						trigger: '.item-1',
+						containerAnimation: scrollTween,
+						start: 'left center',
+						scrub: 1,
+						toggleActions: 'play none none reset',
+						id: '1',
+					},
+				})
+
+				gsap.to('.item-2', {
+					y: -200,
+					duration: 1,
+					rotation: 360,
+					// ease: 'elastic',
+					scrollTrigger: {
+						trigger: '.item-2',
+						containerAnimation: scrollTween,
+						start: 'center 80%',
+						end: 'center 20%',
+						scrub: true,
+						id: '2',
+					},
+				})
+
+				// purple section
+				// ScrollTrigger.create({
+				// 	trigger: '.item-1',
+				// 	containerAnimation: scrollTween,
+				// 	start: 'left 10%',
+				// 	id: '3',
+				// 	// toggleClass: 'active',
+				// })
+			}
+		</script>
+	</body>
+</html>

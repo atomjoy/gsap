@@ -1,0 +1,38 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto|Lobster" rel="stylesheet" type="text/css" />
+
+<style>
+	text {
+		font-family: Lobster;
+	}
+
+	path {
+		stroke-dashoffset: 100;
+	}
+</style>
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="300px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
+	<defs>
+		<path id="criclePath" d=" M 150, 150 m -120, 0 a 120,120 0 0,1 240,0 a 120,120 0 0,1 -240,0 " />
+	</defs>
+
+	<!-- <circle cx="150" cy="150" r="150" fill="#000"/> -->
+	<g>
+		<use xlink:href="#criclePath" fill="none" />
+		<text fill="#000">
+			<textPath xlink:href="#criclePath">Text in a circle path using SVG!</textPath>
+		</text>
+	</g>
+</svg>
+
+<p>type text in the input box:</p>
+<input type="text" />
+
+<script>
+	var inputBox = document.getElementsByTagName('input')[0]
+
+	inputBox.addEventListener('input', function (event) {
+		//console.log('input');
+		var text = inputBox.value
+		document.getElementsByTagName('textPath')[0].innerHTML = text
+	})
+</script>

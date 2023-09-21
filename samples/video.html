@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Transparent video</title>
+		<style>
+			div {
+				height: 100vh;
+				position: relative;
+			}
+			.d1 {
+				background-color: #222;
+			}
+			.d2 {
+				background-color: #141414;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="d1">
+			<video autoplay="" loop="" muted="" playsinline="" style="width: auto; height: 90vh; position: absolute; bottom: 0; right: 0; left: auto; top: auto; z-index: 100">
+				<source src="https://rotato.netlify.app/alpha-demo-site/movie-hevc.mov" type='video/mp4; codecs="hvc1"' />
+				<source src="https://rotato.netlify.app/alpha-demo-site/movie-webm.webm" type="video/webm" />
+			</video>
+		</div>
+
+		<div class="d2">
+			<video width="auto" height="100%" autoplay loop muted playsinline style="width: auto; height: 100vh; position: absolute; bottom: 0; right: 0; left: auto; top: auto; z-index: 100">
+				<source src="https://rotato.netlify.app/alpha-demo/movie-hevc.mov" type='video/mp4; codecs="hvc1"' />
+				<source src="https://rotato.netlify.app/alpha-demo/movie-webm.webm" type="video/webm" />
+			</video>
+		</div>
+	</body>
+</html>

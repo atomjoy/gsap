@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Pin on scroll</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				background: #fff;
+				margin: 0;
+				font-family: 'Poppins', sans-serif;
+			}
+
+			.spacer {
+				width: 100%;
+				height: 50vh;
+				background: #efefef;
+			}
+
+			.spacer > div {
+				color: #fff;
+				font-weight: 900;
+				font-size: 99px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding-top: 100px;
+			}
+
+			.headline {
+				background: #d4d3d3;
+				border-radius: 6px;
+				height: 4em;
+				width: 100%;
+			}
+
+			.text {
+				margin: 0.8em 0 0 0;
+				background: #efefef;
+				border-radius: 6px;
+				height: 1em;
+				width: 100%;
+			}
+
+			.gallery {
+				display: flex;
+				outline: 1px solid red;
+				background: #f8e6ef;
+			}
+
+			.left {
+				width: 50%;
+			}
+
+			.detailsWrapper {
+				margin: auto;
+				width: 80%;
+			}
+
+			.details {
+				outline: 1px solid green;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+
+			.right {
+				outline: 1px solid purple;
+				width: 50%;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+
+			.photos {
+				width: 40vw;
+				height: 40vw;
+				background: transparent;
+				position: relative;
+			}
+
+			.photos-box {
+				overflow: hidden;
+				position: absolute;
+				width: 80%;
+				height: 80%;
+				top: 10%;
+				left: 10%;
+				border-radius: 20px;
+			}
+
+			.photo {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+			}
+
+			.photo img {
+				float: left;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.red {
+				background: #f9d2e5;
+			}
+
+			.green {
+				background: #cdd1ff;
+			}
+
+			.blue {
+				background: #ffe4d3;
+			}
+
+			.orange {
+				background: #ffb399;
+			}
+
+			* {
+				outline: 0px solid transparent !important;
+				/* color: #1e90ff; */
+			}
+		</style>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+	</head>
+	<body>
+		<div class="spacer">
+			<div>HEADER</div>
+		</div>
+
+		<div class="gallery">
+			<div class="left">
+				<div class="detailsWrapper">
+					<div class="details d1">
+						<div class="headline red"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+					</div>
+
+					<div class="details d2">
+						<div class="headline green"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+					</div>
+
+					<div class="details d3">
+						<div class="headline blue"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+					</div>
+
+					<div class="details d4">
+						<div class="headline orange"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+						<div class="text"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="right">
+				<div class="photos">
+					<div class="photos-box">
+						<div class="photo red">
+							<img src="https://deveb.co/static/media/vim.2c5e9ce4.jpg" />
+						</div>
+						<div class="photo green">
+							<img src="https://deveb.co/static/media/newdopegood.6e57b4b4.jpg" />
+						</div>
+						<div class="photo blue">
+							<img src="https://deveb.co/static/media/am-arc.0bba8786.jpg" />
+						</div>
+						<div class="photo orange">
+							<img src="https://deveb.co/static/media/dopegood.b2cad70d.jpg" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="spacer">
+			<div>FOOTER</div>
+		</div>
+
+		<script>
+			window.onload = () => {
+				console.log('Gsap works')
+
+				gsap.set('.photo:not(:first-child)', {
+					opacity: 1,
+					scale: 1,
+					// y: '100%',
+					clipPath: 'inset(100% 0% 0%)',
+					scale: 1,
+				})
+
+				gsap.set('.photo img', {
+					y: 5,
+				})
+
+				const animation = gsap.to('.photo:not(:first-child)', {
+					opacity: 1,
+					scale: 1,
+					duration: 0.5,
+					stagger: 1,
+					// y: '0%',
+					clipPath: 'inset(0% 0% 0%)',
+					scale: 1,
+				})
+
+				gsap.to('.photo img', {
+					y: -5,
+					duration: 1,
+					repeat: -1,
+					yoyo: true,
+					ease: 'power1.inOut',
+				})
+
+				ScrollTrigger.create({
+					trigger: '.gallery',
+					start: 'top top',
+					end: 'bottom bottom',
+					pin: '.right',
+					animation: animation,
+					scrub: 2,
+					// markers: true,
+				})
+
+				gsap.to('.gallery', {
+					duration: 1,
+					backgroundColor: '#f9d2e5aa',
+					scrollTrigger: {
+						trigger: '.d1',
+						scrub: true,
+					},
+				})
+
+				gsap.to('.gallery', {
+					duration: 1,
+					backgroundColor: '#cdd1ffaa',
+					scrollTrigger: {
+						trigger: '.d2',
+						scrub: true,
+					},
+				})
+
+				gsap.to('.gallery', {
+					duration: 1,
+					backgroundColor: '#ffe4d3ee',
+					scrollTrigger: {
+						trigger: '.d3',
+						scrub: true,
+					},
+				})
+
+				gsap.to('.gallery', {
+					duration: 1,
+					backgroundColor: '#ffb399aa',
+					scrollTrigger: {
+						trigger: '.d4',
+						scrub: true,
+					},
+				})
+			}
+		</script>
+	</body>
+</html>
+
+<!--
+  ScrollTrigger Docs: https://greensock.com/docs/v3/Plugins/ScrollTrigger
+
+  Inspiration: https://deveb.co
+
+  Idea: Animate .photo background-position not img tag.
+-->

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<style>
+			body {
+				margin: 0px;
+				padding: 0px;
+			}
+			.div1,
+			.div2 {
+				height: 100vh;
+			}
+
+			.div1 {
+				background-color: #f60;
+			}
+
+			.div2 {
+				background-color: #5c5;
+			}
+
+			.box {
+				width: 100px;
+				height: 100px;
+				background-color: #09f;
+			}
+
+			.trigger {
+				margin-top: 200px;
+				width: 100px;
+				height: 100px;
+				background-color: #d9168b;
+			}
+		</style>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+	</head>
+	<body>
+		<div class="div1"></div>
+		<div class="div2">
+			<div class="box"></div>
+			<div class="trigger"></div>
+		</div>
+
+		<script>
+			window.onload = () => {
+				console.log('Gsap works')
+
+				gsap.registerPlugin(ScrollTrigger)
+
+				gsap.to('.box', {
+					x: 400,
+					duration: 2,
+					scrollTrigger: '.trigger',
+				})
+			}
+		</script>
+	</body>
+</html>
