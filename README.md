@@ -1,6 +1,9 @@
 # GSAP Js Tutorials
 GSAP javascript tutorials.
 
+- DeVeb Scrolling Content with Pinned Image (ScrollTrigger / GSAP)
+https://github.com/atomjoy/gsap/tree/main/pin-img-scroll-clip
+
 ## Images
 
 ### Clip path on scroll
