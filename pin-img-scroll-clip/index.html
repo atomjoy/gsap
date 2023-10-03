@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Pin on scroll</title>
+		<title>DeVeb Scrolling Content with Pinned Image (ScrollTrigger / GSAP)</title>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -53,7 +53,7 @@
 
 			.gallery {
 				display: flex;
-				outline: 1px solid red;
+				box-sizing: border-box;
 				background: #f8e6ef;
 			}
 
@@ -67,7 +67,6 @@
 			}
 
 			.details {
-				outline: 1px solid green;
 				height: 100vh;
 				display: flex;
 				flex-direction: column;
@@ -75,7 +74,6 @@
 			}
 
 			.right {
-				outline: 1px solid purple;
 				width: 50%;
 				height: 100vh;
 				display: flex;
@@ -115,25 +113,20 @@
 				object-fit: cover;
 			}
 
-			.red {
+			.col1 {
 				background: #f9d2e5;
 			}
 
-			.green {
+			.col2 {
 				background: #cdd1ff;
 			}
 
-			.blue {
+			.col3 {
 				background: #ffe4d3;
 			}
 
-			.orange {
+			.col4 {
 				background: #ffb399;
-			}
-
-			* {
-				outline: 0px solid transparent !important;
-				/* color: #1e90ff; */
 			}
 
 			@media all and (max-width: 640px) {
@@ -184,7 +177,7 @@
 			<div class="left">
 				<div class="detailsWrapper">
 					<div class="details d1">
-						<div class="headline red"></div>
+						<div class="headline col1"></div>
 						<div class="text"></div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -192,7 +185,7 @@
 					</div>
 
 					<div class="details d2">
-						<div class="headline green"></div>
+						<div class="headline col2"></div>
 						<div class="text"></div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -200,7 +193,7 @@
 					</div>
 
 					<div class="details d3">
-						<div class="headline blue"></div>
+						<div class="headline col3"></div>
 						<div class="text"></div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -208,7 +201,7 @@
 					</div>
 
 					<div class="details d4">
-						<div class="headline orange"></div>
+						<div class="headline col4"></div>
 						<div class="text"></div>
 						<div class="text"></div>
 						<div class="text"></div>
@@ -220,16 +213,16 @@
 			<div class="right">
 				<div class="photos">
 					<div class="photos-box">
-						<div class="photo red">
+						<div class="photo col1">
 							<img src="https://deveb.co/static/media/vim.2c5e9ce4.jpg" />
 						</div>
-						<div class="photo green">
+						<div class="photo col2">
 							<img src="https://deveb.co/static/media/newdopegood.6e57b4b4.jpg" />
 						</div>
-						<div class="photo blue">
+						<div class="photo col3">
 							<img src="https://deveb.co/static/media/am-arc.0bba8786.jpg" />
 						</div>
-						<div class="photo orange">
+						<div class="photo col4">
 							<img src="https://deveb.co/static/media/dopegood.b2cad70d.jpg" />
 						</div>
 					</div>
@@ -332,9 +325,7 @@
 </html>
 
 <!--
-  ScrollTrigger Docs: https://greensock.com/docs/v3/Plugins/ScrollTrigger
+  ScrollTrigger Docs: https://col2sock.com/docs/v3/Plugins/ScrollTrigger
 
   Inspiration: https://deveb.co
-
-  Idea: Animate .photo background-position not img tag.
 -->
