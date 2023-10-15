@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<style>
+			#atomjoy-path {
+				stroke-dasharray: 73.3335 73.3335; /* 146.667 / 2 */
+				stroke-dashoffset: 0;
+				stroke-width: 20;
+				fill: #fff;
+				fill-opacity: 0;
+				animation: dash 5s linear infinite;
+			}
+
+			svg {
+				width: 200px;
+				height: 200px;
+			}
+
+			@keyframes dash {
+				to {
+					stroke-dashoffset: 1466.67;
+				}
+			}
+
+			@keyframes dashBg {
+				50% {
+					fill-opacity: 1;
+				}
+
+				100% {
+					stroke-dashoffset: 1466.67;
+					fill-opacity: 0;
+				}
+			}
+
+			svg div.coneGradient {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+				background: conic-gradient(from 270deg, #ff4800 10%, #dfd902 35%, #20dc68, #0092f4, #da54d8 72% 75%, #ff4800 95%);
+				animation: colorRotate 5s linear infinite;
+			}
+
+			@keyframes colorRotate {
+				to {
+					transform: rotate(360deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<svg id="svg" version="1.1" viewBox="0, 0, 400,400" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+			<defs>
+				<linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+					<stop offset="0%" stop-color="red" />
+					<stop offset="50%" stop-color="black" stop-opacity="0" />
+					<stop offset="100%" stop-color="blue" />
+				</linearGradient>
+			</defs>
+
+			<mask id="myMask">
+				<path
+					fill="#fff"
+					stroke="#fff"
+					stroke-width="1"
+					stroke-linecap="round"
+					id="atomjoy-path"
+					d="m 139.79584,342.41558 c 27.92891,-14.75128 42.88751,-47.60105 35.19423,-78.61553 -4.89714,-19.74222 -21.16407,-32.80099 -26.88948,-51.48807 -9.5542,-31.18385 20.34803,-60.92365 52.60643,-60.92355 32.25839,1e-4 62.16063,29.73991 52.60642,60.92375 -5.72541,18.68707 -21.99235,31.74584 -26.88948,51.48807 -7.69326,31.01446 7.26532,63.86425 35.19423,78.61553 32.7579,17.30184 75.83849,11.95174 100.66024,-16.04854 35.54993,-40.10227 31.85142,-104.78844 -3.7986,-144.42515 C 319.01883,138.0682 286.19019,93.845549 245.41496,51.244181 234.47346,39.812659 216.37167,32.911585 200.70702,32.911486 185.04237,32.911387 167.37249,39.812471 156.431,51.243985 115.65577,93.845341 82.395199,138.06801 42.934193,181.94189 7.2841844,221.5786 3.5856726,286.26479 39.135603,326.36704 c 24.821746,28.00028 67.902337,33.35038 100.660237,16.04854 z" />
+			</mask>
+			<foreignObject x="0" y="0" width="110%" height="110%" mask="url(#myMask)">
+				<div class="coneGradient"></div>
+			</foreignObject>
+
+			<!-- <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient2)" mask="url(#myMask)" /> -->
+		</svg>
+
+		<script>
+			// svg path length
+			let len = document.querySelector('path')
+
+			console.log(len, len.getTotalLength(), 146.667 / 4)
+		</script>
+	</body>
+</html>
