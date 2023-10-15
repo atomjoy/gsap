@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Gsap ScrollTrigger Cards</title>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Observer.min.js"></script>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function (event) {
+				console.log('DOM loaded')
+
+				// On load with arrow functions
+				window.onload = () => {
+					console.log('window loaded')
+
+					gsap.registerPlugin(ScrollTrigger)
+
+					const cards = document.querySelectorAll('.card')
+					const header = document.querySelector('.header')
+					const animation = gsap.timeline()
+
+					// Cards margins
+					let gapTop = 50 // Cards margin top
+					let gapBot = 50 // Cards margin bottom
+					let cardHeight = 0
+
+					function initCards() {
+						animation.clear()
+						cardHeight = cards[0].offsetHeight
+						console.log('initCards()', cardHeight)
+						cards.forEach((card, index) => {
+							if (index > 0) {
+								//increment y value of each card by cardHeight
+								gsap.set(card, { y: index * cardHeight + gapBot })
+								//animate each card back to 0 (for stacking)
+								animation.to(card, { y: index * gapTop, duration: index * 0.5, ease: 'none' }, 0)
+							}
+						})
+					}
+
+					initCards()
+
+					ScrollTrigger.create({
+						trigger: '.wrapper',
+						start: 'top top',
+						pin: true,
+						end: () => `+=${cards.length * cardHeight + header.offsetHeight}`,
+						scrub: true,
+						animation: animation,
+						//invalidateOnRefresh: true,
+						//markers: true,
+					})
+
+					ScrollTrigger.addEventListener('refreshInit', initCards)
+				}
+			})
+		</script>
+
+		<style>
+			@import url('https://fonts.googleapis.com/css?family=Teko');
+
+			* {
+				position: relative;
+				box-sizing: border-box;
+			}
+
+			.wrapper {
+				display: block;
+				height: auto;
+				min-height: 150vh;
+				background: #e4e0fa;
+			}
+
+			.cards {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+
+			.card {
+				padding: 2em;
+				color: #fff;
+				background: #ffb399;
+				position: absolute;
+				width: 90%;
+				height: 50vh;
+				margin-left: 5%;
+				margin-bottom: 5%;
+				text-transform: uppercase;
+				font-size: 10vw;
+				border-radius: 20px;
+				box-shadow: 0px -5px 15px #0001;
+			}
+
+			body {
+				margin: 0;
+				font-weight: 900;
+				font-family: 'Poppins', sans-serif;
+				background: #efefef;
+			}
+
+			.card,
+			.header,
+			.spacer {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				font-size: 50px;
+				color: #fff;
+			}
+
+			.header {
+				width: 100%;
+				height: 150px;
+				line-height: 1;
+			}
+
+			.card:nth-child(odd) {
+				background: #ffe4d3;
+			}
+
+			.spacer {
+				text-transform: uppercase;
+				font-size: 99px;
+				margin: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="spacer" style="height: 50vh">HEADER</div>
+
+		<div class="wrapper">
+			<div class="header">Scroll Page</div>
+
+			<div class="cards">
+				<div class="card">stacking</div>
+				<div class="card">cards</div>
+				<div class="card">for</div>
+				<div class="card">you</div>
+				<div class="card">to</div>
+				<div class="card">explore</div>
+				<div class="card">and</div>
+				<div class="card">use</div>
+			</div>
+
+			<div class="spacer" style="height: 30vh"></div>
+		</div>
+
+		<div class="spacer" style="height: 50vh">FOOTER</div>
+	</body>
+</html>
