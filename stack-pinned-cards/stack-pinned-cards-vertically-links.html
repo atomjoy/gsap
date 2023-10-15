@@ -22,15 +22,15 @@
 
 					gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin)
 
+					// Cards margins
+					let gapTop = 50 // Cards margin top
+					let gapBot = 200 // Cards margin bottom
+					let cardHeight = 0 // Current height
+
 					const cards = document.querySelectorAll('.card')
 					const header = document.querySelector('.header')
 					const wraper = document.querySelector('.wrapper')
 					const animation = gsap.timeline()
-
-					// Cards margins
-					let gapTop = 50 // Cards margin top
-					let gapBot = 50 // Cards margin bottom
-					let cardHeight = 0
 
 					function initCards() {
 						animation.clear()
@@ -60,7 +60,7 @@
 
 						// Wrapper height
 						gsap.set(wraper, {
-							height: cards.length * gapBot + cardHeight + header.offsetHeight + gapBot * 2,
+							height: cards.length * gapTop + cardHeight + header.offsetHeight + gapBot / 2,
 							overflow: 'hidden',
 						})
 
