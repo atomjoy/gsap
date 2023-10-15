@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Gsap ScrollTrigger Cards</title>
+		<title>Gsap stack pinned cards vertically</title>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -15,9 +15,6 @@
 
 		<script>
 			document.addEventListener('DOMContentLoaded', function (event) {
-				console.log('DOM loaded')
-
-				// On load with arrow functions
 				window.onload = () => {
 					console.log('window loaded')
 
@@ -25,6 +22,7 @@
 
 					const cards = document.querySelectorAll('.card')
 					const header = document.querySelector('.header')
+					const wraper = document.querySelector('.wrapper')
 					const animation = gsap.timeline()
 
 					// Cards margins
@@ -43,6 +41,10 @@
 								//animate each card back to 0 (for stacking)
 								animation.to(card, { y: index * gapTop, duration: index * 0.5, ease: 'none' }, 0)
 							}
+						})
+
+						gsap.set(wraper, {
+							height: cards.length * gapBot + cardHeight + header.offsetHeight + gapBot * 2,
 						})
 					}
 
@@ -72,10 +74,17 @@
 				box-sizing: border-box;
 			}
 
+			body {
+				margin: 0;
+				font-weight: 900;
+				font-family: 'Poppins', sans-serif;
+				background: #efefef;
+			}
+
 			.wrapper {
 				display: block;
-				height: auto;
-				min-height: 150vh;
+				height: 100vh;
+				/* overflow: hidden; */
 				background: #e4e0fa;
 			}
 
@@ -98,13 +107,6 @@
 				font-size: 10vw;
 				border-radius: 20px;
 				box-shadow: 0px -5px 15px #0001;
-			}
-
-			body {
-				margin: 0;
-				font-weight: 900;
-				font-family: 'Poppins', sans-serif;
-				background: #efefef;
 			}
 
 			.card,
@@ -147,12 +149,8 @@
 				<div class="card">for</div>
 				<div class="card">you</div>
 				<div class="card">to</div>
-				<div class="card">explore</div>
-				<div class="card">and</div>
-				<div class="card">use</div>
+				<div class="card">explore and use</div>
 			</div>
-
-			<div class="spacer" style="height: 30vh"></div>
 		</div>
 
 		<div class="spacer" style="height: 50vh">FOOTER</div>
