@@ -33,11 +33,12 @@
 					const animation = gsap.timeline()
 
 					function initCards() {
-						animation.clear()
+						let cnt = 0
 						cardHeight = cards[0].offsetHeight
 
 						console.log('initCards()', cardHeight)
-						let cnt = 0
+
+						animation.clear()
 						animation.add(() => setActiveNav(0))
 
 						cards.forEach((card, index) => {
@@ -46,12 +47,23 @@
 							if (index > 0) {
 								// Links
 								animation.addLabel('card' + index)
+
 								// Increment y value of each card by cardHeight
 								gsap.set(card, { y: index * cardHeight + gapBot })
+
 								//animate each card back to 0 (for stacking)
-								animation.to(card, { y: index * gapTop, duration: index * 0.5, ease: 'none' }, 0)
+								animation.to(
+									card,
+									{
+										y: index * gapTop,
+										duration: index * 0.5,
+										ease: 'none',
+									},
+									0
+								)
+
 								// Set active link
-								animation.add(() => setActiveNav(index))
+								animation.call(() => setActiveNav(index))
 							}
 						})
 
@@ -68,9 +80,11 @@
 						gsap.utils.toArray('.cardlink').forEach((btn, i) => {
 							btn.addEventListener('click', (e) => {
 								e.preventDefault()
-								gsap.to(window, { scrollTo: animation.scrollTrigger.labelToScroll('card' + (i + 1)) })
-
-								setActiveNav(i)
+								// Scroll and update links
+								gsap.to(window, {
+									scrollTo: animation.scrollTrigger.labelToScroll('card' + (i + 1)),
+									onComplete: () => setActiveNav(i),
+								})
 							})
 						})
 					}
@@ -89,7 +103,7 @@
 						end: () => `+=${cards.length * cardHeight + header.offsetHeight}`,
 						scrub: true,
 						animation: animation,
-						//invalidateOnRefresh: true,
+						invalidateOnRefresh: true,
 						//markers: true,
 					})
 
