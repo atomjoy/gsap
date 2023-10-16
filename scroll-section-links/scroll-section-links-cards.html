@@ -24,21 +24,24 @@
 
 					let sections = gsap.utils.toArray('section')
 					let listItem = gsap.utils.toArray('li')
+					let marginBot = 2 // Required for links
 
 					sections.forEach((section, index) => {
+						// Required section margin for links
+						gsap.set(section, { marginBottom: marginBot })
+						// Sections
 						ScrollTrigger.create({
 							trigger: section,
 							toggleClass: { targets: listItem[index], className: 'active' },
-							// markers: true,
 							start: 'top top',
 							end: 'bottom top',
 							pin: true,
 							pinSpacing: false,
+							// markers: true,
 						})
 					})
 
 					listItem.forEach((link, index) => {
-						// Create section
 						let trigger = ScrollTrigger.create({
 							trigger: sections[index],
 							start: 'top top',
@@ -47,9 +50,9 @@
 						link.addEventListener('click', (e) => {
 							e.preventDefault()
 							if (index > 0) {
-								gsap.to(window, { scrollTo: trigger.start + 1 })
+								gsap.to(window, { scrollTo: trigger.start + marginBot })
 							} else {
-								gsap.to(window, { scrollTo: 1 })
+								gsap.to(window, { scrollTo: 0 })
 							}
 						})
 					})
@@ -58,6 +61,10 @@
 		</script>
 
 		<style>
+			* {
+				box-sizing: border-box;
+			}
+
 			body {
 				margin: 0px;
 				padding: 0px;
@@ -97,7 +104,6 @@
 				font-weight: 900;
 				color: #fff;
 				background: #efefef;
-				border-bottom: 1px solid #e0e0e0;
 				text-transform: uppercase;
 				box-shadow: 0px 5px 15px #0003;
 			}
@@ -111,6 +117,10 @@
 				background: #8981bb;
 				border: 1px solid #8981bb;
 			}
+
+			.c {
+				background: #ffe4d3;
+			}
 		</style>
 	</head>
 	<body>
@@ -119,9 +129,9 @@
 				<!--- ALL YOUR CONTENT HERE --->
 
 				<section>one</section>
-				<section>two</section>
+				<section class="c">two</section>
 				<section>three</section>
-				<section>four</section>
+				<section class="c">four</section>
 
 				<aside>
 					<ul>
