@@ -25,28 +25,42 @@
 					const sections = gsap.utils.toArray('section')
 					const links = gsap.utils.toArray('.link')
 					const boxes = gsap.utils.toArray('.box')
-					const animation = gsap.timeline()
 
-					// Rotate to 360 and back to 0 and move
-					animation.to('.box', {
-						// xPercent: 200, // translateX(200%)
-						x: 400, // translateX(400px)
-						rotate: 360,
-						ease: 'none',
+					const animation = gsap.timeline({
 						repeat: 1,
 						yoyo: true,
 					})
 
-					gsap.utils.toArray('.box').forEach((el, index) => {
+					animation
+						.to('.box', {
+							// xPercent: 200, // translateX(200%)
+							x: 600, // translateX(400px)
+							rotate: 360,
+							ease: 'none',
+						})
+						.to('.box', {
+							ease: 'none',
+						})
+
+					boxes.forEach((el, index) => {
 						ScrollTrigger.create({
+							markers: true, // Show markers
+							id: 'box', // Marker name
 							trigger: el,
-							start: 'top 300', // trigger viewport
-							end: 'bottom top', // trigger viewport
+							start: 'top top', // trigger viewport
+							end: '+=300 top', // trigger viewport
 							pin: true,
 							animation: animation,
 							scrub: true, // trigger animation on scroll
-							markers: true,
-							id: 'box',
+						})
+					})
+
+					sections.forEach((el, index) => {
+						ScrollTrigger.create({
+							markers: true, // Show markers
+							id: 'section', // Marker name
+							trigger: el,
+							start: 'top center', // trigger viewport
 							// Cool links
 							onEnter: () => {
 								links.forEach((e, i) => {
@@ -67,17 +81,17 @@
 
 					// Scroll to link on click
 					links.forEach((link, index) => {
+						// Link objects
 						let trigger = ScrollTrigger.create({
 							trigger: sections[index],
 							start: 'top top',
 						})
-
+						// Click events
 						link.addEventListener('click', (e) => {
 							e.preventDefault()
 							if (index > 0) {
 								gsap.to(window, { scrollTo: trigger.start })
 							} else {
-								// gsap.to(window, { scrollTo: trigger.start })
 								gsap.to(window, { scrollTo: 0 })
 							}
 						})
@@ -108,16 +122,16 @@
 			}
 
 			section {
-				height: 900px;
+				height: 1200px;
 				position: relative;
 				border-bottom: 1px solid #785235;
+				box-sizing: border-box;
 			}
 
 			.box {
 				position: relative;
 				width: 200px;
 				height: 200px;
-				margin-top: 300px;
 				color: #fff;
 				display: flex;
 				align-items: center;
@@ -139,6 +153,8 @@
 				align-items: center;
 				justify-content: center;
 				z-index: 0;
+				font-size: 99px;
+				font-weight: 900;
 			}
 
 			.c1 {
@@ -187,23 +203,26 @@
 			<div id="smooth-content">
 				<!--- ALL YOUR CONTENT HERE --->
 				<section>
-					<div class="box c1">Hello Link</div>
-					<div class="box-copy">Hello Link</div>
+					<div class="box-copy">1</div>
+					<div class="box c1">Hello !</div>
 				</section>
 				<section>
-					<div class="box c2">Hello Link</div>
-					<div class="box-copy">Hello Link</div>
+					<div class="box-copy">2</div>
+					<div class="box c2">Hello !</div>
 				</section>
 				<section>
-					<div class="box c3">Hello Link</div>
-					<div class="box-copy">Hello Link</div>
+					<div class="box-copy">3</div>
+					<div class="box c3">Hello !</div>
 				</section>
-				<section></section>
+				<section>
+					<div class="box-copy">😎</div>
+				</section>
 
 				<div class="menu-links">
-					<div class="link">1</div>
+					<div class="link active">1</div>
 					<div class="link">2</div>
 					<div class="link">3</div>
+					<div class="link">4</div>
 				</div>
 			</div>
 		</div>
