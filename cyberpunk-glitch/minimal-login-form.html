@@ -1,0 +1,497 @@
+<html>
+<head>
+<title>Sign Up</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="robots" content="index,follow">
+<meta http-equiv="expires" content="0">
+<link rel="canonical" href="https://domain.xx">
+<link rel="shortcut icon" href="/favicon/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+/*
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;600;700;800;900&display=swap');
+*/
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;600;700;800;900&family=Open Sans:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+	--c: #1a73e8;
+	--c-dark: #174ea6;
+	--c-darker: #011029;
+	--g: #83d400;
+	--g-dark: #20be00;
+	--bg: #f2f2f34b;
+	--bg-gray: #dde8ee;
+	--bg-blue: #0099ff22;
+	--bg-light: #1a73e806;
+	--bg-selection: #edf1f7;
+	--placeholder-color: #7e919b;
+	--focus-shadow: 0 0 0 4px rgba(0,96,223,0.3), 0 0 0 1px #008aea;
+}
+
+* {
+	/* must have */
+	box-sizing: border-box;
+	text-decoration: none;
+	outline: none;
+	/* fonts, text */
+	letter-spacing: 0.06em;
+	font-family: Exo, 'Open Sans';
+	/* Scrollbar color */
+	scrollbar-width: thin;
+	scrollbar-color: #1a73e8 #fff;
+}
+
+a {
+	color: #1a73e8;
+}
+a:hover {
+	color: #174ea6;
+}
+
+::selection {
+	color: #174ea6;
+	background: #edf1f7;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	height: 100vh;
+	max-height: 100vh;
+	background: #fff;
+}
+
+::placeholder {
+	color: #7e919b;
+}
+
+.login-menu {
+	position: relative;
+	z-index: 9999;
+	float: left;
+	width: 100%;
+	height: auto;
+}
+
+.logo {
+	margin: 5px 15px;
+}
+
+.form-center {
+	float: left;
+	width: 100%;
+	height: auto;
+	min-height: 100vh;
+	z-index: 0;
+	overflow: hidden;
+	/*
+	background: url('bg-0.jpg') #1a73e806;
+	background-position: center center;
+	background-size: cover;
+	background-attachment: fixed;
+	*/
+}
+
+.form {
+	margin: 10vh auto;
+	width: 90%;
+	max-width: 460px;
+	overflow: hidden;
+	background: #fff;
+	padding: 10px 25px 20px 25px;
+	/* box-shadow: 0px 5px 10px rgba(0,0,0,0.05); */
+}
+
+.form-title {
+	color: #011029;
+	font-size: 30px;
+	font-weight: 700;
+	padding: 10px 2%;
+}
+
+.form-error {
+	display: none;
+	float: left;
+	width: 96%;
+	margin: 10px 2%;
+	padding: 10px 15px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #ff2233;
+	border: 1px solid #ff2233;
+	box-sizing: border-box;
+	border-radius: 0px;
+}
+
+.form-error i {
+	margin-right: 10px;
+}
+
+label {
+	color: #174ea6;
+	font-size: 13px;
+	font-weight: 600;
+	float: left;
+	width: 96%;
+	margin: 20px 2% 10px 2%;
+}
+
+.btn {
+	position: relative;
+	float: right;
+	margin: 25px 25px 20px 0px;
+	padding: 10px 25px;
+	color: #1a73e8;
+	background: #fff;
+	border: 1px solid transparent;
+	border-radius: 6px;
+	font-weight: 500;
+	font-size: 15px;
+	transition: all .6s;
+}
+.btn:hover {
+	color: #174ea6;
+	background: #0099ff22;
+	border: 1px solid #174ea6;
+}
+
+.btn-full {
+	border: 1px solid #1a73e8;
+}
+
+.inp {
+	position: relative;
+	float: left;
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #dde8ee;
+	box-sizing: border-box;
+}
+.inp-long {
+	position: relative;
+	float: left;
+	width: 100%;
+	height: auto;
+	margin-top: 20px;
+	font-size: 13px;
+	overflow: hidden;
+}
+input {
+	position: relative;
+	float: left;
+	width: 96%;
+	margin: 0px 2%;
+	padding: 15px;
+	border: 0px;
+	outline: none;
+	box-sizing: border-box;
+	transition: all .3s;
+	font-weight: 400;
+	font-size: 15px;
+	color: #011029;
+	background: transparent;
+}
+input:focus {
+	background: #f2f3f34b;
+	color: #011029;
+	box-shadow: var(--focus-shadow);
+}
+.input-error-warning {
+	color: #ff2233;
+}
+.input-error {
+	transition: all .5s;
+	display: none;
+	position: relative;
+	float: left;
+	width: 96%;
+	margin: 0px 2% 10px 2%;
+	padding: 5px 10px;
+	box-sizing: border-box;
+	color: #f25;
+	background: #ff225505;
+	border: 1px solid #ff225505;
+	z-index: 999;
+	font-size: 12px;
+	top: 10px;
+}
+.input-error i {
+	margin-right: 10px;
+}
+
+.inp::before {
+	content: '';
+	position: absolute;
+	bottom: -1px;
+	left: 2%;
+	width: 10%;
+	background: #1a73e8;
+	border: 1px solid #1a73e8;
+	z-index: 999;
+	transition: all .6s;
+}
+.inp-focus::before {
+	content: '';
+	position: absolute;
+	bottom: -1px;
+	left: 2%;
+	width: 96%;
+	background: #1a73e8;
+	border: 1px solid #1a73e8;
+	z-index: 9999;
+	box-sizing: border-box;
+}
+.btn-sumbit {
+	position: relative;
+	float: right;
+	width: auto;
+	margin: 30px 0px;
+	padding: 0px 20px;
+	color: #1a73e8;
+	border: 1px solid #dde8ee;
+	border-radius: 6px;
+	box-shadow: 0px 3px 5px rgba(0,0,0,0.05);
+	cursor: pointer;
+	transition: all .6s;
+}
+.btn-sumbit:hover {
+	border-color: #1a73e8;
+	background: #1a73e8;
+	color: #fff;
+}
+
+.btn-sumbit-txt {
+	float: right;
+	z-index: 999;
+	padding: 13px 20px;
+	border-top: 2px solid transparent;
+	border-bottom: 2px solid #1a73e8;
+	font-weight: 700;
+	font-size: 13px;
+}
+
+.btn-sumbit-txt-before {
+	position: absolute;
+	float: right;
+	z-index: 999;
+	padding: 13px 20px;
+	color: #fff;
+	border-top: 2px solid transparent;
+	border-bottom: 2px solid #fff;
+	background: #1a73e8;
+	font-weight: 700;
+	font-size: 13px;
+	clip-path: circle(2% at 10px 24px);
+	transition: clip-path .5s;
+}
+.btn-sumbit:hover .btn-sumbit-txt-before {
+	border-top: 2px solid #fff;
+	clip-path: circle(45%);
+}
+
+.checkbox {
+	float: left;
+	margin: 15px 20px 20px 2%;
+	width: 30px; height: 30px;
+	border-bottom: 1px solid #dde8ee;
+	background: #edf1f7;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.checkbox:hover .checkbox-dot {
+	transform: rotate(360deg);
+}
+.checkbox-dot {
+	float: left;
+	width: 20px; height: 20px;
+	margin: 5px;
+	padding: 2px;
+	color: #fff;
+	background: #ccdde7;
+	border: 1px solid #ccdde7;
+	border-radius: 3px;
+	box-sizing: border-box;
+	transition: all .6s;
+}
+.checkbox-dot i {
+	opacity: 0;
+}
+.checkbox-dot:hover {
+	background: #9cb6c5;
+	border: 1px solid #9cb6c5;
+}
+.checkbox-selected .checkbox-dot {
+	background: #1a73e8;
+	border: 1px solid #1a73e8;
+}
+.checkbox-selected .checkbox-dot i {
+	opacity: 1;
+}
+.checkbox-selected .checkbox-dot:hover {
+	filter: contrast(80%);
+}
+
+@media all and (max-width: 640px) {
+	.btn {
+		font-size: 13px;
+		padding: 7px 15px;
+	}
+
+	.form {
+		margin: 5vh auto;
+	}
+}
+
+@media all and (min-height: 768px) {
+	.form {
+		margin: 15vh auto;
+	}
+}
+
+</style>
+<script>
+// input focus animation
+function inputFocus(it, ev)
+{
+	let p = it.parentNode;
+	p.classList.add('inp-focus');
+	console.log(it.parentNode);
+}
+// input blur animation
+function inputBlur(it, ev)
+{
+	let p = it.parentNode;
+	p.classList.remove('inp-focus');
+	console.log(it.parentNode);
+}
+// validate email
+function validEmail(it,id)
+{   let err = document.querySelector(id);
+	if(it.value.length > 0 && !IsValidEmail(it.value))  {
+		err.style.display = 'inherit';
+		err.classList.add('animate__fadeIn');
+		it.classList.add('input-error-warning')
+	} else {
+		err.style.display = 'none';
+		err.classList.remove('animate__fadeIn');
+		it.classList.remove('input-error-warning')
+	}
+}
+// validate pass
+function validPass(it,id)
+{   let err = document.querySelector(id);
+	if(it.value.length > 0 && it.value.length < 10)  {
+		err.style.display = 'inherit';
+		err.classList.add('animate__fadeIn');
+		it.classList.add('input-error-warning')
+	} else {
+		err.style.display = 'none';
+		err.classList.remove('animate__fadeIn');
+		it.classList.remove('input-error-warning')
+	}
+}
+// submit on click
+function formSumbit(it)
+{
+	it.parentNode.submit();
+}
+// select checkbox
+function inputCheckbox(it,div) {
+	let input = document.querySelector(div)
+	if(input.value == 1) {
+		input.value = 0
+	} else {
+		input.value = 1
+	}
+	it.classList.toggle('checkbox-selected')
+}
+
+/* regex validation */
+function IsBlank(str) {
+	str = str.trim()
+	return (!str || /^\s*$/.test(str) || str.length === 0)
+}
+function IsValidUrl(url) {
+	var re = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/
+	return re.test(url)
+}
+// Validate email
+function IsValidEmail(email) {
+	const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+	return re.test(email)
+}
+// Validate alias
+function IsValidUsername(str)
+{
+	// const re = /^\w+$/;	// str with underscore
+	const re = /^[a-zA-z]{1}[A-Za-z0-9_.]+$/
+	return re.test(str)
+}
+</script>
+</head>
+<body>
+	<div class="login-menu">
+		<img src="https://i.pinimg.com/736x/e4/3c/af/e43cafef54c5a8ab3d68e9b87fd73716.jpg" width="auto" height="70px" class="logo">
+		<a href="" class="btn btn-full">Sign In</a>
+		<a href="" class="btn">Forgot Password</a>
+	</div>
+
+	<div class="form-center">
+		<form id="form" method="POST" enctype="multipart/form-data" class="form">
+
+			<div class="form-title"> Sign Up </div>
+			<div class="form-error"> <i class="fas fa-exclamation"></i> Invalid credentials!</div>
+
+			<label>Email address</label>
+			<div class="inp">
+				<input
+					type="text"
+					name="name"
+					class="input"
+					placeholder="Enter your e-mail address *"
+					onkeyup="validEmail(this,'.email-error')"
+					onfocus="inputFocus(this,event);
+					validEmail(this,'.email-error')"
+					onblur="inputBlur(this,event)"
+				>
+			</div>
+			<div class="input-error email-error animate__animated"> <i class="fas fa-exclamation"></i> Enter valid email address! </div>
+
+			<label>Password</label>
+			<div class="inp">
+				<input type="password" name="name" class="input" placeholder="Enter your password *" onkeyup="validPass(this,'.pass-error')" onfocus="inputFocus(this,event); validPass(this,'.pass-error')" onblur="inputBlur(this,event)">
+			</div>
+			<div class="input-error pass-error animate__animated"> <i class="fas fa-exclamation"></i> Min. length 8 with small and big letter and number and special character! </div>
+
+			<input type="hidden" name="terms" value="0" id="terms">
+
+			<div class="inp-long">
+				<div class="checkbox" onclick="inputCheckbox(this, '#terms')">
+					<span class="checkbox-dot"><i class="fas fa-check"></i></span>
+				</div>
+				<p> Creating an account means you’re okay with our
+					<a href="/contracts/terms-of-service" target="_blank">Terms of Service</a>,
+					<a href="/contracts/privacy-policy" target="_blank">Privacy Policy</a>, and our default
+					<a href="/contracts/notifications" target="_blank">Notification Settings</a>.
+				</p>
+			</div>
+
+			<div class="btn-sumbit" onclick="formSumbit(this)">
+				<div class="btn-sumbit-txt"> Create Account </div>
+				<div class="btn-sumbit-txt-before"> Create Account </div>
+			</div>
+
+		</form>
+	</div>
+</body>
+</html>

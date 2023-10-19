@@ -1,0 +1,220 @@
+<a class="btn-preorder" href="">
+	<span class="btn-preorder__text" data-text="BUY NOW ONLINE"> BUY NOW ONLINE </span>
+	<span class="btn-preorder--glitch"></span>
+</a>
+
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
+
+	* {
+		font-family: Orbitron;
+		text-decoration: none;
+	}
+
+	body {
+		background-color: #fff;
+	}
+
+	.btn-preorder {
+		color: #fff;
+		margin: 50px auto;
+		display: block;
+		text-align: center;
+		font-size: 26px;
+		line-height: 3.3;
+		text-transform: uppercase;
+		position: relative;
+		width: 340px;
+		height: 85px;
+		background: url('cyber.svg');
+		background-repeat: no-repeat;
+		transition: all 1s;
+	}
+	.btn-preorder:hover {
+		opacity: 0.86;
+		background: url('cyber-hover.svg');
+	}
+	.btn-preorder::after {
+		content: 'R77';
+		position: absolute;
+		right: 30px;
+		bottom: -3px;
+		font-size: 9px;
+		line-height: 1;
+		color: #00000f;
+		letter-spacing: 1px;
+		box-sizing: inherit;
+	}
+	.btn-preorder--glitch {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: none;
+		background-image: url(cyber.svg);
+		background-repeat: no-repeat;
+		-webkit-filter: drop-shadow(-2px 3px #67e3f3) drop-shadow(-1px -3px #02d8f3) drop-shadow(2px 1px #02d8f3);
+		filter: drop-shadow(-2px 3px #67e3f3) drop-shadow(-1px -3px #02d8f3) drop-shadow(2px 1px #02d8f3);
+	}
+	.btn-preorder:hover .btn-preorder--glitch,
+	.btn-preorder:hover .btn-preorder__text:after {
+		display: block;
+		-webkit-animation-duration: 2s;
+		animation-duration: 2s;
+		-webkit-animation-timing-function: linear;
+		animation-timing-function: linear;
+		-webkit-animation-iteration-count: infinite;
+		animation-iteration-count: infinite;
+		-webkit-animation-name: glitch-anim-1;
+		animation-name: glitch-anim-1;
+		-webkit-animation-direction: alternate;
+		animation-direction: alternate;
+	}
+	.btn-preorder__text {
+		position: relative;
+		z-index: 2;
+	}
+	.btn-preorder__text:after {
+		display: none;
+		content: attr(data-text);
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		text-shadow: 2px 1px #67e3f3, -2px -2px #f8ef02;
+		z-index: 2;
+	}
+	@keyframes glitch-anim-1 {
+		0% {
+			opacity: 1;
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+			-webkit-clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+			clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+		}
+		2% {
+			-webkit-clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			-webkit-transform: translate(-5px);
+			transform: translate(-5px);
+		}
+		6% {
+			-webkit-clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			-webkit-transform: translate(5px);
+			transform: translate(5px);
+		}
+		8% {
+			-webkit-clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			-webkit-transform: translate(-5px);
+			transform: translate(-5px);
+		}
+		9% {
+			-webkit-clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%);
+			-webkit-transform: translate(0);
+			transform: translate(0);
+		}
+		10% {
+			-webkit-clip-path: polygon(0 54%, 100% 54%, 100% 44%, 0 44%);
+			clip-path: polygon(0 54%, 100% 54%, 100% 44%, 0 44%);
+			-webkit-transform: translate3d(5px, 0, 0);
+			transform: translate3d(5px, 0, 0);
+		}
+		13% {
+			-webkit-clip-path: polygon(0 54%, 100% 54%, 100% 44%, 0 44%);
+			clip-path: polygon(0 54%, 100% 54%, 100% 44%, 0 44%);
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+		}
+		13.1% {
+			-webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			-webkit-transform: translate3d(5px, 0, 0);
+			transform: translate3d(5px, 0, 0);
+		}
+		15% {
+			-webkit-clip-path: polygon(0 60%, 100% 60%, 100% 40%, 0 40%);
+			clip-path: polygon(0 60%, 100% 60%, 100% 40%, 0 40%);
+			-webkit-transform: translate3d(5px, 0, 0);
+			transform: translate3d(5px, 0, 0);
+		}
+		20% {
+			-webkit-clip-path: polygon(0 60%, 100% 60%, 100% 40%, 0 40%);
+			clip-path: polygon(0 60%, 100% 60%, 100% 40%, 0 40%);
+			-webkit-transform: translate3d(-5px, 0, 0);
+			transform: translate3d(-5px, 0, 0);
+		}
+		20.1% {
+			-webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			-webkit-transform: translate3d(5px, 0, 0);
+			transform: translate3d(5px, 0, 0);
+		}
+		25% {
+			-webkit-clip-path: polygon(0 85%, 100% 85%, 100% 40%, 0 40%);
+			clip-path: polygon(0 85%, 100% 85%, 100% 40%, 0 40%);
+			-webkit-transform: translate3d(5px, 0, 0);
+			transform: translate3d(5px, 0, 0);
+		}
+		30% {
+			-webkit-clip-path: polygon(0 85%, 100% 85%, 100% 40%, 0 40%);
+			clip-path: polygon(0 85%, 100% 85%, 100% 40%, 0 40%);
+			-webkit-transform: translate3d(-5px, 0, 0);
+			transform: translate3d(-5px, 0, 0);
+		}
+		30.1% {
+			-webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+		}
+		35% {
+			-webkit-clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			-webkit-transform: translate(-5px);
+			transform: translate(-5px);
+		}
+		40% {
+			-webkit-clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			-webkit-transform: translate(5px);
+			transform: translate(5px);
+		}
+		45% {
+			-webkit-clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			-webkit-transform: translate(-5px);
+			transform: translate(-5px);
+		}
+		50% {
+			-webkit-clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			clip-path: polygon(0 63%, 100% 63%, 100% 80%, 0 80%);
+			-webkit-transform: translate(0);
+			transform: translate(0);
+		}
+		55% {
+			-webkit-clip-path: polygon(0 10%, 100% 10%, 100% 0, 0 0);
+			clip-path: polygon(0 10%, 100% 10%, 100% 0, 0 0);
+			-webkit-transform: translate3d(5px, 0, 0);
+			transform: translate3d(5px, 0, 0);
+		}
+		60% {
+			-webkit-clip-path: polygon(0 10%, 100% 10%, 100% 0, 0 0);
+			clip-path: polygon(0 10%, 100% 10%, 100% 0, 0 0);
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+			opacity: 1;
+		}
+		60.1% {
+			-webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			opacity: 1;
+		}
+		to {
+			-webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+			opacity: 1;
+		}
+	}
+</style>

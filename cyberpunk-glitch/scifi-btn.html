@@ -1,0 +1,129 @@
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
+
+	:root {
+		--c: #fcec0c;
+		--b: #fcec0c;
+		--bg: #136377;
+	}
+
+	body {
+		color: #ff0;
+		padding: 30px;
+		background: #136377;
+		font-family: Orbitron;
+		font-weight: 800;
+		background: #084492;
+		/*
+    display: flex;
+    flex-direction: column;
+    */
+	}
+
+	.btn {
+		float: left;
+		width: 200px;
+		height: 40px;
+		margin-right: 10px;
+		color: var(--c);
+		text-shadow: 0px 0px 5px var(--c);
+		transition: text-shadow 1s;
+		text-decoration: none;
+		text-align: center;
+		position: relative;
+		padding-top: 10px;
+		cursor: pointer;
+	}
+	.btn:hover {
+		text-shadow: 0px 0px 30px var(--c);
+	}
+	.btn-anim {
+		background: var(--c);
+		width: 200px;
+		height: 40px;
+		clip-path: polygon(0.2% 99%, 0% 100%, 4.5% 31.5%, 15% 0%, 100% 0%, 96.5% 66%, 86% 100%, 0% 100%, 0% 99%, 86% 99%, 97.8% 72.5%, 99.8% 1%, 15% 1%, 2.2% 25%);
+		transition: clip-path 0.3s;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		z-index: 0;
+	}
+	.btn:hover .btn-anim {
+		text-shadow: 0px 0px 30px var(--c);
+		clip-path: polygon(0.2% 99%, 0% 100%, 0% 14%, 15% 0%, 100% 0%, 100% 86%, 86% 100%, 0% 100%, 0% 99%, 86% 99%, 99.8% 85%, 99.8% 1%, 15% 1%, 0.2% 15%);
+	}
+
+	.btn-dark {
+		line-height: 2.5;
+		float: left;
+		width: 200px;
+		height: 40px;
+		margin-right: 10px;
+		color: var(--c);
+		text-shadow: 0px 0px 5px var(--c);
+		transition: text-shadow 1s;
+		text-decoration: none;
+		text-align: center;
+		position: relative;
+		padding-top: 10px;
+		cursor: pointer;
+	}
+	.btn-dark:hover {
+		text-shadow: 0px 0px 30px var(--c);
+	}
+	.btn-anim-dark {
+		color: var(--bg);
+		background: var(--c);
+		float: left;
+		width: 200px;
+		height: 40px;
+		clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 80%, 80% 100%, 0 100%, 0% 80%, 0% 20%);
+		transition: clip-path 0.3s;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		z-index: 999;
+	}
+	.btn-dark:hover .btn-anim-dark {
+		text-shadow: 0px 0px 30px var(--bg);
+		clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 100% 100%, 20% 100%, 0% 80%, 0% 0%);
+	}
+
+	/* sample anim */
+	.enter {
+		animation: 1s box-wipe reverse;
+		animation-fill-mode: forwards;
+	}
+	.leave {
+		animation: 1s box-wipe;
+		animation-fill-mode: forwards;
+	}
+	@keyframes box-wipe {
+		0% {
+			clip-path: polygon(0.2% 99%, 0% 100%, 4.5% 31.5%, 15% 0%, 100% 0%, 96.5% 66%, 86% 100%, 0% 100%, 0% 99%, 86% 99%, 97.8% 72.5%, 99.8% 1%, 15% 1%, 2.2% 25%);
+		}
+		100% {
+			clip-path: polygon(0.2% 99%, 0% 100%, 0% 14%, 15% 0%, 100% 0%, 100% 86%, 86% 100%, 0% 100%, 0% 99%, 86% 99%, 99.8% 85%, 99.8% 1%, 15% 1%, 0.2% 15%);
+		}
+	}
+</style>
+
+<h1>Cyberpunk button CSS clip-path hover animation.</h1>
+
+<a href="" class="btn-dark">
+	<div class="btn-anim-dark">CYBER PUNK</div>
+</a>
+
+<a href="" class="btn">
+	HOME
+	<div class="btn-anim"></div>
+</a>
+
+<a href="" class="btn-dark">
+	<div class="btn-anim-dark">SOCIAL LINKS</div>
+</a>
+
+<a href="" class="btn">
+	GAMES
+	<div class="btn-anim"></div>
+</a>

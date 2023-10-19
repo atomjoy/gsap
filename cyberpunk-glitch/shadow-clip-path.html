@@ -1,0 +1,18 @@
+<div class="parent-element">
+	<div class="clipped-element"></div>
+</div>
+
+<style>
+.parent-element {
+	filter: drop-shadow(4px 4px 1px #ff00aa) drop-shadow(6px 6px 1px #ffcc00);
+}
+
+.clipped-element {
+	width: 20rem;
+	height: 20rem;
+	margin: 0 auto;
+	background-color: #0099ff;
+	clip-path: polygon(0 0, 50% 0, 100% 50%, 50% 100%, 0 100%, 50% 50%);
+    clip-path: polygon(1% 22%, 26% 0%, 74% 5%, 100% 11%, 99% 33%, 70% 29%, 51% 14%, 24% 24%, 15% 47%, 23% 64%, 40% 67%, 58% 56%, 69% 46%, 81% 45%, 92% 57%, 93% 81%, 80% 95%, 41% 96%, 16% 88%, 4% 74%, 0% 67%);
+}
+</style>

@@ -1,0 +1,305 @@
+<div class="container">
+  <div class="clip clip0">GLITCH</div>
+  <div class="clip clip1">GLITCH</div>
+  <div class="clip clip2">GLITCH</div>
+  <div class="clip clip3">GLITCH</div>
+  <!-- <div class="clip clip0 clip-txt">GLITCH</div> -->
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
+
+* {
+	font-family: Orbitron;
+}
+
+body {
+  background-color: #fff;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.clip {
+	color: #6d0091;
+	z-index: 7;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	line-height: 1;
+	font-size: 100px;
+}
+
+.clip0 {
+  animation: glitch0 1.5s infinite;
+}
+
+.clip1 {
+  color: #c5c;
+  animation: glitch1 2.5s infinite;
+  z-index: 1;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 9%, 6% 6%, 7% 15%, 96% 17%, 96% 31%, 8% 30%, 9% 42%, 96% 44%, 97% 61%, 9% 61%, 10% 74%, 96% 76%, 96% 91%, 6% 88%, 4% 97%, 0% 68%);
+  text-shadow:2px 1px #67e3f3,-2px -2px #f8ef02;
+}
+
+.clip2 {
+  color: #f20;
+  animation: glitch2 2.5s infinite;
+  clip-path: polygon(1% 24%, 15% 1%, 47% 0%, 99% 20%, 88% 35%, 32% 19%, 19% 37%, 9% 63%, 30% 69%, 60% 55%, 93% 56%, 92% 86%, 68% 93%, 24% 90%, 2% 86%, 0% 55%);
+  z-index: 3;
+  text-shadow:2px 1px #67e3f3,-2px -2px #f8ef02;
+}
+
+.clip3 {
+  color: #0ff;
+  animation: glitch3 2.5s infinite;
+  clip-path: polygon(52% 45%, 98% 28%, 100% 84%, 0 77%, 0 31%);
+  z-index: 5;
+  text-shadow:2px 1px #67e3f3,-2px -2px #f8ef02;
+}
+
+.clip-txt {
+	background: url("https://wallpaperose.com/wp-content/uploads/2014/02/Blue-Planet-with-Ring.jpg");
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+
+/*Keyframes*/
+@keyframes glitch0 {
+  0% {
+	transform: none;
+	opacity: 1;
+  }
+  7% {
+	transform: skew(-0.3deg, -0.7deg);
+	opacity: 0.99;
+  }
+  10% {
+	transform: none;
+	opacity: 1;
+  }
+  27% {
+	transform: none;
+	opacity: 1;
+  }
+  30% {
+	transform: skew(0.5deg, -0.21deg);
+	opacity: 0.98;
+  }
+  35% {
+	transform: none;
+	opacity: 1;
+  }
+  52% {
+	transform: none;
+	opacity: 1;
+  }
+  55% {
+	transform: skew(-3deg, 0.9deg);
+	opacity: 0.99;
+  }
+  50% {
+	transform: none;
+	opacity: 1;
+  }
+  72% {
+	transform: none;
+	opacity: 1;
+  }
+  75% {
+	transform: skew(0.9deg, 2deg);
+	opacity: 0.98;
+  }
+  80% {
+	transform: none;
+	opacity: 1;
+  }
+  100% {
+	transform: none;
+	opacity: 1;
+  }
+}
+
+@keyframes glitch1 {
+  0% {
+	transform: none;
+	opacity: 1;
+	z-index: 1;
+  }
+  7% {
+	transform: skew(-2.5deg, -5.9deg);
+	opacity: 0.35;
+  }
+  10% {
+	transform: none;
+	opacity: 1;
+	z-index: 9;
+  }
+  27% {
+	transform: none;
+	opacity: 1;
+	z-index: 3;
+  }
+  30% {
+	transform: skew(4.8deg, -0.1deg);
+	transform: translate(-15px, 1%);
+	opacity: 0.35;
+	z-index: 2;
+  }
+  35% {
+	transform: none;
+	opacity: 1;
+  }
+  52% {
+	transform: none;
+	opacity: 1;
+  }
+  55% {
+	transform: skew(-6deg, 0.2deg);
+	opacity: 0.35;
+	z-index: 9;
+  }
+  50% {
+	transform: none;
+	opacity: 1;
+  }
+  72% {
+	transform: none;
+	opacity: 1;
+	z-index: 1;
+  }
+  75% {
+	transform: skew(2.4deg, 5deg);
+	transform: translate(-20px, 2%);
+	opacity: 0.35;
+  }
+  80% {
+	transform: none;
+	opacity: 1;
+  }
+  100% {
+	transform: none;
+	opacity: 1;
+	z-index: 2;
+  }
+}
+
+@keyframes glitch2 {
+  0% {
+	transform: none;
+	opacity: 0.25;
+  }
+  7% {
+	transform: translate(-2px, -3px);
+	opacity: 0.5;
+  }
+  10% {
+	transform: none;
+	opacity: 0.25;
+  }
+  27% {
+	transform: none;
+	opacity: 0.25;
+  }
+  30% {
+	transform: translate(-5px, -2px);
+	opacity: 0.5;
+  }
+  35% {
+	transform: none;
+	opacity: 0.25;
+	transform: translate(5px, 10%);
+  }
+  52% {
+	transform: none;
+	opacity: 0.25;
+  }
+  55% {
+	transform: translate(-5px, -1px);
+	opacity: 0.5;
+  }
+  50% {
+	transform: none;
+	opacity: 0.25;
+  }
+  72% {
+	transform: none;
+	opacity: 0.25;
+  }
+  75% {
+	transform: translate(-2px, -6px);
+	opacity: 0.5;
+  }
+  80% {
+	transform: none;
+	opacity: 0.25;
+  }
+  100% {
+	transform: none;
+	opacity: 0.25;
+  }
+}
+
+@keyframes glitch3 {
+  0% {
+	transform: none;
+	opacity: 0.25;
+  }
+  7% {
+	transform: translate(2px, 3px);
+	opacity: 0.5;
+  }
+  10% {
+	transform: none;
+	opacity: 0.25;
+  }
+  27% {
+	transform: none;
+	opacity: 0.25;
+  }
+  30% {
+	transform: translate(5px, 2px);
+	opacity: 0.5;
+  }
+  35% {
+	transform: none;
+	opacity: 0.25;
+  }
+  52% {
+	transform: none;
+	opacity: 0.25;
+		transform: translate(-10px, 15%);
+  }
+  55% {
+	transform: translate(5px, 1px);
+	opacity: 0.5;
+  }
+  50% {
+	transform: none;
+	opacity: 0.25;
+  }
+  72% {
+	transform: none;
+	opacity: 0.25;
+  }
+  75% {
+	transform: translate(2px, 6px);
+	opacity: 0.5;
+  }
+  80% {
+	transform: none;
+	opacity: 0.25;
+  }
+  100% {
+	transform: none;
+	opacity: 0.25;
+  }
+}
+</style>
