@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Natural Scrolling Text over Pinned Video</title>
+  <style>
+    body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
+    
+    .spacer { height: 100vh; display: flex; align-items: center; justify-content: center; background: #111; }
+    
+    /* The master container dictates the total scroll duration */
+    .scroll-container { position: relative; width: 100%; height: 400vh; }
+    
+    /* Video stays perfectly stuck to the screen viewport */
+    .video-wrapper { position: sticky; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; z-index: 1; }
+    video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* The overlay now matches the natural structural layout flow */
+    .text-overlay { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; }
+    
+    /* Text panels track with standard scrolling behavior */
+    .text-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; box-sizing: border-box; }
+    h2 { font-size: 3rem; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.7); }
+    p { font-size: 1.5rem; max-width: 600px; color: #ccc; text-shadow: 0 2px 5px rgba(0,0,0,0.7); }
+  </style>
+</head>
+<body>
+
+  <div class="spacer"><h1>Scroll Down to Begin</h1></div>
+
+  <div class="scroll-container">
+    
+    <!-- Video is fixed beneath via sticky position -->
+    <div class="video-wrapper">
+      <video id="my-video" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" muted playsinline preload="auto"></video>
+    </div>
+
+    <!-- Text scrolls naturally upward right over the top of the video -->
+    <div class="text-overlay">
+      <section class="text-section">
+        <h2>Cinematic Design</h2>
+        <p>The copy rolls smoothly across the frame without complex layout hacks.</p>
+      </section>
+      <section class="text-section">
+        <h2>Perfect Synchronization</h2>
+        <p>The scrubbing mechanics keep pace seamlessly underneath your layout.</p>
+      </section>
+      <section class="text-section">
+        <h2>Interactive Storytelling</h2>
+        <p>As you scroll past paragraphs, the underlying scenes progress.</p>
+      </section>
+    </div>
+
+  </div>
+
+  <div class="spacer"><h1>End of Experience</h1></div>
+
+  <!-- CDN Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/Observer.min.js" integrity="sha512-28pasLrvjfeQ4EOKQVk6Iihr5mAlO0XhAfbbSgmXT711p3e20uZQRPjcaWt7PXNaNmp9tI67S66K+l38/x8ZCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const video = document.querySelector("#my-video");
+
+    video.addEventListener("loadedmetadata", () => {
+      // Scrub the video progress from start to end of the parent container
+      gsap.to(video, {
+        currentTime: video.duration,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".scroll-container",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true
+        }
+      });
+    });
+  </script>
+</body>
+</html>

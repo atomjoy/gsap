@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollSmoother Video Sync with Interactive Timeline Navigation</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .spacer {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+    }
+    .spacer h1 {
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .scroll-container {
+      position: relative;
+      width: 100%;
+      height: 400vh; 
+    }
+    
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .text-section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    h2 {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.95);
+    }
+    p {
+      font-size: 1.6rem;
+      max-width: 650px;
+      color: #ccc;
+      line-height: 1.5;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.95);
+    }
+
+    /* ==========================================================================
+       MODYFIKACJA KONTROLERA: KLIKALNE PUNKTY NAWIGACJI
+       ========================================================================== */
+    .video-controller {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      font-family: monospace;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 20px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .video-controller.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scene-counter {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: #aaa;
+    }
+    .scene-counter span {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* Kontener trzymający klikalne segmenty paska */
+    .interactive-timeline {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    /* Pojedynczy punkt / kreska na osi czasu */
+    .timeline-dot {
+      width: 40px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      cursor: pointer;
+      pointer-events: auto; /* Pozwala na klikanie mimo zablokowanego z-indexu nadrzędnego tekstu */
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .timeline-dot:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: scaleY(1.3);
+    }
+
+    /* Stan aktywny (wypełniony) kontrolowany przez GSAP */
+    .timeline-dot.is-active {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Interaktywny widżet kontrolera UI -->
+  <div class="video-controller" id="ui-controller">
+    <div class="scene-counter">SCENE <span id="current-scene">1</span> / 3</div>
+    <div class="interactive-timeline" id="ui-timeline">
+      <!-- Generujemy kropki przypisane indeksem do scen -->
+      <div class="timeline-dot is-active" data-target="0"></div>
+      <div class="timeline-dot" data-target="1"></div>
+      <div class="timeline-dot" data-target="2"></div>
+    </div>
+  </div>
+
+  <!-- ScrollSmoother REQUIRED MASTER WRAPPER -->
+  <div id="smooth-wrapper">
+    <!-- ScrollSmoother REQUIRED CONTENT CANVAS -->
+    <div id="smooth-content">
+
+      <!-- Intro Section -->
+      <div class="spacer">
+        <h1>Scroll Down to Begin</h1>
+      </div>
+
+      <!-- Main Interactive Video Area -->
+      <div class="scroll-container">
+        
+        <!-- Pinned Video Wrapper -->
+        <div class="video-wrapper">
+          <video id="my-video" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" muted playsinline preload="auto"></video>
+        </div>
+
+        <!-- Natural Upward Scrolling Text Blocks -->
+        <div class="text-overlay">
+          <section class="text-section" data-scene="1" data-time="0">
+            <h2>Scene One: The Origin</h2>
+            <p>ScrollSmoother handles mouse physics naturally. Text fades dynamically and doesn't lag when scrolling backward.</p>
+          </section>
+          
+          <section class="text-section" data-scene="2" data-time="3">
+            <h2>Scene Two: Progression</h2>
+            <p>As this layout container crosses the middle threshold, the engine scrubs the underlying clip smoothly to 3 seconds.</p>
+          </section>
+          
+          <section class="text-section" data-scene="3" data-time="6">
+            <h2>Scene Three: The Climax</h2>
+            <p>The final section slides into view seamlessly, locking down the final frame sequence at 6 seconds.</p>
+          </section>
+        </div>
+
+      </div>
+
+      <!-- Outro Section -->
+      <div class="spacer">
+        <h1>End of Experience</h1>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GSAP Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/InertiaPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Observer.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/TextPlugin.min.js"></script> -->
+  
+  <script>
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    // 1. Inicjalizacja ScrollSmoother
+    const smoother = ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 1.5,
+      effects: true,
+      normalizeScroll: true
+    });
+
+    const video = document.querySelector("#my-video");
+    const sections = gsap.utils.toArray(".text-section");
+    const uiController = document.querySelector("#ui-controller");
+    const currentSceneText = document.querySelector("#current-scene");
+    const dots = gsap.utils.toArray(".timeline-dot");
+
+    video.addEventListener("loadedmetadata", () => {
+      
+      const slideDistance = 60; 
+      const fadeSpeed = 1.5;     
+      const holdTime = 5;       
+
+      // 2. Przypinanie wideo za pomocą ScrollTrigger
+      ScrollTrigger.create({
+        trigger: ".scroll-container",
+        start: "top top",         
+        end: "bottom bottom",     
+        pin: ".video-wrapper",    
+        pinSpacing: false,        
+        scrub: true
+      });
+
+      // 3. Pokazywanie/Ukrywanie widżetu kontrolera w zależności od obecności wideo na ekranie
+      ScrollTrigger.create({
+        trigger: ".scroll-container",
+        start: "top center", 
+        end: "bottom center", 
+        onEnter: () => uiController.classList.add("is-visible"),
+        onLeave: () => uiController.classList.remove("is-visible"),
+        onEnterBack: () => uiController.classList.add("is-visible"),
+        onLeaveBack: () => uiController.classList.remove("is-visible")
+      });
+
+      // 4. Obsługa wideo, stanów tekstu oraz nawigacji kropek
+      sections.forEach((section, index) => {
+        const targetTime = parseFloat(section.getAttribute("data-time"));
+        const sceneNumber = section.getAttribute("data-scene");
+
+        // Kontrola klatek filmu + automatyczne podświetlanie kropek w UI podczas scrollowania
+        gsap.to(video, {
+          currentTime: targetTime,
+          ease: "none", 
+          scrollTrigger: {
+            trigger: section,
+            start: "top center",   
+            end: "bottom center",
+            scrub: true,
+            onToggle: (self) => {
+              if (self.isActive) {
+                // Aktualizuj tekst licznika (np. SCENE 2 / 3)
+                currentSceneText.innerText = sceneNumber;
+                
+                // Zdejmij klasę aktywną ze wszystkich kropek i nadaj tylko aktualnej
+                dots.forEach(dot => dot.classList.remove("is-active"));
+                dots[index].classList.add("is-active");
+              }
+            }
+          }
+        });
+
+        // Oś czasu dla pojawiania się i znikania tekstu (symetryczny fade)
+        const textTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top bottom",   
+            end: "bottom top",     
+            scrub: true,           
+          }
+        });
+
+        gsap.set(section, { opacity: 0, y: slideDistance });
+
+        textTimeline
+          .to(section, { opacity: 1, y: 0, duration: fadeSpeed, ease: "power1.out" })
+          .to(section, { duration: holdTime }) 
+          .to(section, { opacity: 0, y: -slideDistance, duration: fadeSpeed, ease: "power1.in" });
+      });
+
+      // ==========================================================================
+      // NOWOŚĆ: LOGIKA KLIKALNYCH SEGMENCKÓW (SMOOTH SCROLL TO TARGET)
+      // ==========================================================================
+      dots.forEach(dot => {
+        dot.addEventListener("click", (e) => {
+          const targetIndex = parseInt(e.target.getAttribute("data-target"));
+          const targetSection = sections[targetIndex];
+
+          // Przewiń stronę tak, aby środek wybranej sekcji tekstowej znalazł się dokładnie na środku ekranu
+          smoother.scrollTo(targetSection, true, "center center");
+        });
+      });
+
+    });
+
+    if (video.readyState >= 1) {
+      video.dispatchEvent(new Event("loadedmetadata"));
+    }
+  </script>
+</body>
+</html>

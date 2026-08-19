@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollSmoother Video Sync with Circle Preloader</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* --------------------------------------------------------------------------
+       CIRCLE PRELOADER STYLES
+       -------------------------------------------------------------------------- */
+    .circle-preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #000;
+      z-index: 99999; /* Gwarancja pozycji nad wszystkim innym */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
+    }
+
+    /* Klasa ukrywająca aktywowana przez JavaScript */
+    .circle-preloader.is-loaded {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .spinner-circle {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.1); /* Subtelny obrys całego koła */
+      border-top-color: #fff; /* Jasny akcent obracający się na górze */
+      border-radius: 50%;
+      animation: spinCircle 1s linear infinite;
+    }
+
+    @keyframes spinCircle {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* --------------------------------------------------------------------------
+       MAIN TEMPLATE STYLES
+       -------------------------------------------------------------------------- */
+    .spacer {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+    }
+    .spacer h1 {
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .scroll-container {
+      position: relative;
+      width: 100%;
+      height: 400vh; 
+    }
+    
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .text-section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    h2 {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.95);
+    }
+    p {
+      font-size: 1.6rem;
+      max-width: 650px;
+      color: #ccc;
+      line-height: 1.5;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.95);
+    }
+
+    /* INTERACTIVE HUD WIDGET */
+    .video-controller {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      font-family: monospace;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 20px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .video-controller.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scene-counter {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: #aaa;
+    }
+    .scene-counter span {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .interactive-timeline {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .timeline-dot {
+      width: 40px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .timeline-dot:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: scaleY(1.3);
+    }
+
+    .timeline-dot.is-active {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Okrągły Preloader na środku ekranu -->
+  <div class="circle-preloader" id="preloader">
+    <div class="spinner-circle"></div>
+  </div>
+
+  <!-- Widżet boczny nawigacji -->
+  <div class="video-controller" id="ui-controller">
+    <div class="scene-counter">SCENE <span id="current-scene">1</span> / 3</div>
+    <div class="interactive-timeline" id="ui-timeline">
+      <div class="timeline-dot is-active" data-target="0"></div>
+      <div class="timeline-dot" data-target="1"></div>
+      <div class="timeline-dot" data-target="2"></div>
+    </div>
+  </div>
+
+  <!-- ScrollSmoother REQUIRED MASTER WRAPPER -->
+  <div id="smooth-wrapper">
+    <!-- ScrollSmoother REQUIRED CONTENT CANVAS -->
+    <div id="smooth-content">
+
+      <!-- Intro Spacer -->
+      <div class="spacer">
+        <h1>Scroll Down to Begin</h1>
+      </div>
+
+      <!-- Main Interaction Space -->
+      <div class="scroll-container">
+        
+        <div class="video-wrapper">
+          <video id="my-video" src="https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-23055-large.mp4" muted playsinline preload="auto"></video>
+        </div>
+
+        <div class="text-overlay">
+          <section class="text-section" data-scene="1" data-time="0">
+            <h2>Scene One: The Origin</h2>
+            <p>ScrollSmoother handles mouse physics naturally. Text fades dynamically and doesn't lag when scrolling backward.</p>
+          </section>
+          
+          <section class="text-section" data-scene="2" data-time="3">
+            <h2>Scene Two: Progression</h2>
+            <p>As this layout container crosses the middle threshold, the engine scrubs the underlying clip smoothly to 3 seconds.</p>
+          </section>
+          
+          <section class="text-section" data-scene="3" data-time="6">
+            <h2>Scene Three: The Climax</h2>
+            <p>The final section slides into view seamlessly, locking down the final frame sequence at 6 seconds.</p>
+          </section>
+        </div>
+
+      </div>
+
+      <!-- Outro Spacer -->
+      <div class="spacer">
+        <h1>End of Experience</h1>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GSAP CDNs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollSmoother.min.js"></script>
+  
+  <script>
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    const smoother = ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 1.5,
+      effects: true,
+      normalizeScroll: true
+    });
+
+    const video = document.querySelector("#my-video");
+    const sections = gsap.utils.toArray(".text-section");
+    const uiController = document.querySelector("#ui-controller");
+    const currentSceneText = document.querySelector("#current-scene");
+    const dots = gsap.utils.toArray(".timeline-dot");
+    const preloader = document.querySelector("#preloader");
+
+    // Funkcja uruchamiająca wywoływana dopiero, gdy film jest załadowany
+    function initializeExperience() {
+      // Płynne ukrycie czarnej zasłony i kółka (Fade out)
+      preloader.classList.add("is-loaded");
+      
+      const slideDistance = 60; 
+      const fadeSpeed = 1.5;     
+      const holdTime = 5;       
+      
+      let isNavigating = false;
+
+      // 1. Przypinanie wideo na ekranie przez ScrollTrigger
+      ScrollTrigger.create({
+        trigger: ".scroll-container",
+        start: "top top",         
+        end: "bottom bottom",     
+        pin: ".video-wrapper",    
+        pinSpacing: false,        
+        scrub: true
+      });
+
+      // 2. Pokazywanie i ukrywanie widżetu nawigacji bocznej
+      ScrollTrigger.create({
+        trigger: ".scroll-container",
+        start: "top center", 
+        end: "bottom center", 
+        onEnter: () => uiController.classList.add("is-visible"),
+        onLeave: () => uiController.classList.remove("is-visible"),
+        onEnterBack: () => uiController.classList.add("is-visible"),
+        onLeaveBack: () => uiController.classList.remove("is-visible")
+      });
+
+      // 3. JEDNA GLOBALNA OŚ CZASU DLA WIDEO (Brak błędu cofania filmu)
+      const videoTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".scroll-container",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true
+        }
+      });
+
+      videoTimeline.to(video, { currentTime: 0, duration: 0 }); 
+      videoTimeline.to(video, { currentTime: 3, duration: 1, ease: "none" }); 
+      videoTimeline.to(video, { currentTime: 6, duration: 1, ease: "none" }); 
+
+      // 4. Samodzielne animacje fade dla sekcji tekstowych
+      sections.forEach((section, index) => {
+        const sceneNumber = section.getAttribute("data-scene");
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top center",
+          end: "bottom center",
+          onToggle: (self) => {
+            if (self.isActive && !isNavigating) {
+              currentSceneText.innerText = sceneNumber;
+              dots.forEach(dot => dot.classList.remove("is-active"));
+              dots[index].classList.add("is-active");
+            }
+          }
+        });
+
+        const textTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top bottom",   
+            end: "bottom top",     
+            scrub: true,           
+          }
+        });
+
+        gsap.set(section, { opacity: 0, y: slideDistance });
+
+        textTimeline
+          .to(section, { opacity: 1, y: 0, duration: fadeSpeed, ease: "power1.out" })
+          .to(section, { duration: holdTime }) 
+          .to(section, { opacity: 0, y: -slideDistance, duration: fadeSpeed, ease: "power1.in" });
+      });
+
+      // 5. Bezpieczna, klikalna nawigacja po kropkach
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", (e) => {
+          const targetSection = sections[index];
+          const sceneNumber = targetSection.getAttribute("data-scene");
+
+          isNavigating = true;
+
+          currentSceneText.innerText = sceneNumber;
+          dots.forEach(d => d.classList.remove("is-active"));
+          dot.classList.add("is-active");
+
+          smoother.scrollTo(targetSection, true, "center center");
+
+          gsap.delayedCall(1.6, () => {
+            isNavigating = false;
+          });
+        });
+      });
+
+      // Odświeżenie pozycji kalkulacji ScrollTrigger po usunięciu preloadera
+      ScrollTrigger.refresh();
+    }
+
+    // Bezpieczne nasłuchiwanie na pełne pobranie bufora wideo
+    video.addEventListener("canplaythrough", () => {
+      if (!preloader.classList.contains("is-loaded")) {
+        initializeExperience();
+      }
+    });
+
+    // Uruchomienie natychmiastowe, jeśli wideo pobrało się z pamięci podręcznej (cache)
+    if (video.readyState >= 4) {
+      initializeExperience();
+    }
+  </script>
+</body>
+</html>

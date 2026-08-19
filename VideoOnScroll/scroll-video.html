@@ -1,0 +1,102 @@
+<!--
+Source - https://stackoverflow.com/a/75856653
+Posted by Pixelharvester
+Retrieved 2026-08-19, License - CC BY-SA 4.0
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/Observer.min.js" integrity="sha512-28pasLrvjfeQ4EOKQVk6Iihr5mAlO0XhAfbbSgmXT711p3e20uZQRPjcaWt7PXNaNmp9tI67S66K+l38/x8ZCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        body {
+            padding:0px;
+            margin:0px;
+        }
+
+        #v0 {
+            display: inline-block;
+            margin: 0 auto;
+            position: sticky;
+            position: -webkit-sticky;
+            top:0px;
+            width: 70%;
+        }
+    </style>
+
+    <script type="module">
+        // import { gsap } from "https://cdn.skypack.dev/gsap";
+        // import { ScrollTrigger } from "https://cdn.skypack.dev/gsap/ScrollTrigger";
+    </script>
+
+    <script>
+        function playVideo() {
+            gsap.registerPlugin(ScrollTrigger);
+            const video = document.querySelector("#my-video");
+            ScrollTrigger.create({
+                trigger: video,
+                start: "top 80%",
+                end: "bottom 20%",
+                onEnter: () => video.play(),
+                onLeave: () => video.pause(),
+                onEnterBack: () => video.play(),
+                onLeaveBack: () => video.pause(),
+            });
+        }
+
+        function scrollVideo() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const video = document.querySelector("#v0");
+
+            video.addEventListener("loadedmetadata", () => {
+                gsap.to(video, {
+                    currentTime: video.duration,
+                    ease: "none",
+                    scrollTrigger: {
+                    trigger: video,
+                    start: "top top",
+                    end: "+=300%", // How long the scroll lasts
+                    pin: true,     // Pins the video during scrub
+                    scrub: true,   // Smoothly ties playback to scroll
+                    }
+                });
+            });
+        }
+    </script>
+
+</head>
+<body>
+    <div style="height:1600vh; text-align: center;">
+        <video id="v0" tabindex="0", autobuffer preload>
+            <source type='video/mp4; codecs=&quot;avc1.4D401E, mp4a.40.2&quot;' src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4"></source>
+        </video>
+    </div>
+
+    <script>
+        // start video at frame 0
+        var frameNumber = 0,
+        // lower numbers = faster playback
+        playbackConst = 800,
+        // select video element         
+        vid = document.getElementById('v0'); 
+
+        // Use requestAnimationFrame for smooth playback
+        function scrollPlay(){  
+            var frameNumber  = window.pageYOffset/playbackConst;
+            vid.currentTime  = frameNumber;
+            window.requestAnimationFrame(scrollPlay);
+        }
+
+        window.requestAnimationFrame(scrollPlay);    
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Naturalny Scroll z Zamrażaniem Wideo</title>
+  <style>
+    body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
+    
+    .spacer { height: 100vh; display: flex; align-items: center; justify-content: center; background: #111; }
+    
+    /* Główny kontener określa całkowitą długość scrollowania */
+    .scroll-container { position: relative; width: 100%; height: 400vh; }
+    
+    /* Wideo przyklejone do ekranu */
+    .video-wrapper { position: sticky; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; z-index: 1; }
+    video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Warstwa tekstowa nakłada się i przewija naturalnie */
+    .text-overlay { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; }
+    
+    /* Sekcje tekstowe rozłożone równomiernie */
+    .text-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; box-sizing: border-box; }
+    h2 { font-size: 3rem; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.9); }
+    p { font-size: 1.5rem; max-width: 600px; color: #ccc; text-shadow: 0 2px 5px rgba(0,0,0,0.9); }
+  </style>
+</head>
+<body>
+
+  <div class="spacer"><h1>Przewiń w dół, aby zacząć</h1></div>
+
+  <div class="scroll-container">
+    
+    <!-- Pinned Video -->
+    <div class="video-wrapper">
+      <video id="my-video" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" muted playsinline preload="auto"></video>
+    </div>
+
+    <!-- Przewijający się tekst (każdy akapit ma swój moment w filmie) -->
+    <div class="text-overlay">
+      <section class="text-section" data-time="0">
+        <h2>Scena Pierwsza: Start</h2>
+        <p>Wideo zaczyna się od początku (0s), dopóki ta sekcja nie minie środka.</p>
+      </section>
+      <section class="text-section" data-time="3">
+        <h2>Scena Druga: Środek filmu</h2>
+        <p>Gdy ten tekst wchodzi na ekran, wideo przewija się i zatrzymuje na 3 sekundzie.</p>
+      </section>
+      <section class="text-section" data-time="6">
+        <h2>Scena Trzecia: Finał</h2>
+        <p>Ostatni nagłówek blokuje wideo na 6 sekundzie filmu.</p>
+      </section>
+    </div>
+
+  </div>
+
+  <div class="spacer"><h1>Koniec doświadczenia</h1></div>
+
+  <!-- CDN Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/Observer.min.js" integrity="sha512-28pasLrvjfeQ4EOKQVk6Iihr5mAlO0XhAfbbSgmXT711p3e20uZQRPjcaWt7PXNaNmp9tI67S66K+l38/x8ZCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const video = document.querySelector("#my-video");
+    const sections = gsap.utils.toArray(".text-section");
+
+    video.addEventListener("loadedmetadata", () => {
+      
+      // Dynamicznie przypisujemy klatki wideo do sekcji tekstu
+      // Możesz zmienić wartości w atrybutach data-time="..." w HTML
+      sections.forEach((section, index) => {
+        const targetTime = parseFloat(section.getAttribute("data-time"));
+
+        // Tworzymy ScrollTrigger dla każdej sekcji, gdy jej środek mija środek ekranu
+        gsap.to(video, {
+          currentTime: targetTime,
+          ease: "power1.out", // Płynne wyhamowanie wideo na wybranym punkcie
+          scrollTrigger: {
+            trigger: section,
+            start: "top center",   // Startuje, gdy góra tekstu mija środek ekranu
+            end: "bottom center", // Kończy, gdy dół tekstu mija środek ekranu
+            scrub: 1,             // Dodaje delikatne wygładzenie ruchu (1 sekunda opóźnienia)
+          }
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>

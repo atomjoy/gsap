@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scroll Trigger Video</title>
+  <style>
+    body { margin: 0; background: #000; height: 300vh; }
+    .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; }
+    video { width: 100%; height: 100%; object-fit: cover; }
+  </style>
+</head>
+<body>
+
+  <div class="video-container">
+    <!-- Ensure muted and playsinline are present for auto/scroll playback -->
+    <video id="my-video" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" muted playsinline preload="auto"></video>
+  </div>
+
+  <!-- CDN Links -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/Observer.min.js" integrity="sha512-28pasLrvjfeQ4EOKQVk6Iihr5mAlO0XhAfbbSgmXT711p3e20uZQRPjcaWt7PXNaNmp9tI67S66K+l38/x8ZCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  
+  <script>
+    // Register plugin right away
+    gsap.registerPlugin(ScrollTrigger);
+
+    const video = document.querySelector("#my-video");
+
+    video.addEventListener("loadedmetadata", () => {
+      gsap.to(video, {
+        currentTime: video.duration,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".video-container",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        }
+      });
+    });
+  </script>
+</body>
+</html>

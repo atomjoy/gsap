@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Natural Scroll with Video Freeze & Text Fades</title>
+  <style>
+    body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
+    
+    .spacer { height: 100vh; display: flex; align-items: center; justify-content: center; background: #111; }
+    
+    /* Master container dictates the total scroll height footprint */
+    .scroll-container { position: relative; width: 100%; height: 400vh; }
+    
+    /* Video background wrapper locked inside the viewport view */
+    .video-wrapper { position: sticky; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; z-index: 1; }
+    video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* The overlay containing text containers sliding naturally up */
+    .text-overlay { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; }
+    
+    /* Text panels start invisible (opacity 0) and slightly offset downwards */
+    .text-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; box-sizing: border-box; opacity: 0; transform: translateY(30px); }
+    h2 { font-size: 3rem; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.9); }
+    p { font-size: 1.5rem; max-width: 600px; color: #ccc; text-shadow: 0 2px 5px rgba(0,0,0,0.9); }
+  </style>
+</head>
+<body>
+
+  <div class="spacer"><h1>Scroll Down to Begin</h1></div>
+
+  <div class="scroll-container">
+    
+    <!-- Pinned Background Video Canvas -->
+    <div class="video-wrapper">
+      <video id="my-video" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" muted playsinline preload="auto"></video>
+    </div>
+
+    <!-- Scrolling Text Overlay Layout -->
+    <div class="text-overlay">
+      <section class="text-section" data-time="0">
+        <h2>Scene One: The Origin</h2>
+        <p>This layout text fades in clearly, anchoring the background clip at 0 seconds.</p>
+      </section>
+      <section class="text-section" data-time="3">
+        <h2>Scene Two: Progression</h2>
+        <p>As this rolls up, the previous copy fades away while the clip transitions to 3s.</p>
+      </section>
+      <section class="text-section" data-time="6">
+        <h2>Scene Three: The Climax</h2>
+        <p>The final section slides into view seamlessly, tracking the video up to 6 seconds.</p>
+      </section>
+    </div>
+
+  </div>
+
+  <div class="spacer"><h1>End of Experience</h1></div>
+
+  <!-- CDN Plugins -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/Observer.min.js" integrity="sha512-28pasLrvjfeQ4EOKQVk6Iihr5mAlO0XhAfbbSgmXT711p3e20uZQRPjcaWt7PXNaNmp9tI67S66K+l38/x8ZCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const video = document.querySelector("#my-video");
+    const sections = gsap.utils.toArray(".text-section");
+
+    video.addEventListener("loadedmetadata", () => {
+      
+      sections.forEach((section) => {
+        const targetTime = parseFloat(section.getAttribute("data-time"));
+
+        // 1. Handles Video Time Transitions
+        gsap.to(video, {
+          currentTime: targetTime,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top center",   // Adjust video when heading hits screen center
+            end: "bottom center",
+            scrub: 1,
+          }
+        });
+
+        // 2. Handles Text Fade-In and Fade-Out 
+        gsap.to(section, {
+          opacity: 1,
+          y: 0, // Moves section up into its native position
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",      // Fades in when entering from the bottom screen edge
+            end: "top 45%",        // Fully visible before hitting the middle screen threshold
+            scrub: true,
+            // Reverses the animation cycle when scrolling backwards
+            toggleActions: "play reverse play reverse" 
+          }
+        });
+
+        // 3. Fades out text as it approaches top viewport edge
+        gsap.to(section, {
+          opacity: 0,
+          y: -30, // Subtle upward drift as it dissolves away
+          ease: "power2.in",
+          scrollTrigger: {
+            trigger: section,
+            start: "bottom 55%",   // Starts fading out right after crossing screen center
+            end: "bottom 15%",     // Dissolves completely before exiting top view boundaries
+            scrub: true
+          }
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>
